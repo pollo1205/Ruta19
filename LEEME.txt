@@ -1,0 +1,8 @@
+CIRCUITO TENEX — CHECADOR BETA
+Incluye index.html, manifest.webmanifest, sw.js e icon.svg.
+
+IMPORTANTE: los archivos aún no están publicados en Internet. Para instalar como PWA y usar el modo sin conexión, primero hay que alojarlos en un sitio HTTPS (por ejemplo GitHub Pages, Netlify o Cloudflare Pages).
+
+CÁLCULO: referencia conocida U1 en Mercado 12:12; separación estimada 16 minutos; ciclo 96 minutos; seis unidades. La secuencia estima una salida cercana a las 06:04 para mantener la misma fase y coincidir con la referencia conocida. Los horarios de mañana y los pasos por parada deben validarse en campo.
+
+Los reportes se guardan en el teléfono y no se comparten automáticamente.

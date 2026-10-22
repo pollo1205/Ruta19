@@ -1,0 +1,19 @@
+{
+  "name": "Circuito Tenex · Checador beta",
+  "short_name": "Circuito Tenex",
+  "description": "Checador beta de horarios del Circuito Tenex",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#eef3f7",
+  "theme_color": "#10243a",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
