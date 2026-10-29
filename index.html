@@ -1,33 +1,274 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#10243a"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg"><title>Circuito Tenex · Beta</title><style>
-*{box-sizing:border-box}body{margin:0;background:#eef3f7;color:#172b3d;font:16px system-ui,sans-serif}main{max-width:680px;margin:auto;padding:15px}.card{background:#fff;border-radius:17px;padding:17px;margin:0 0 13px;box-shadow:0 3px 14px #1231}h1{font-size:24px;margin:0}.muted{color:#637589}.beta{background:#fff0c2;color:#805600;border-radius:20px;padding:6px 9px;font-size:12px;font-weight:bold}.head{display:flex;justify-content:space-between;gap:10px;align-items:center}label{display:block;font-weight:bold;margin-bottom:8px}select,input,button{font:inherit;padding:12px;border-radius:10px;border:1px solid #cbd5e1;width:100%}button{background:#10243a;color:white;border:0;font-weight:bold;cursor:pointer}.hero{text-align:center;background:#10243a;color:white;padding:23px}.hero .muted{color:#d1deea}.unit{font-size:54px;font-weight:850;margin:7px}.time{font-size:29px;font-weight:750}.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.small{background:#f1f5f9;padding:12px;border-radius:12px}.small b{display:block;font-size:18px;margin-top:5px}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:10px 5px;border-bottom:1px solid #e1e8ee}th{font-size:12px;color:#637589}.chips{display:flex;flex-wrap:wrap;gap:6px}.chip{width:auto;background:#e7eef4;color:#183c59;padding:8px 10px;font-size:13px}details{margin-top:12px;border-top:1px solid #e1e8ee;padding-top:12px}summary{font-weight:bold;cursor:pointer}.row{display:flex;gap:8px}.row>*{flex:1}.report{border-bottom:1px solid #e1e8ee;padding:9px 0;font-size:13px}.notice{background:#fff7df;padding:12px;border-radius:12px;font-size:13px}.foot{text-align:center;font-size:12px;color:#637589;padding:10px}
-</style></head><body><main>
-<header class="card head"><div><h1>🚐 Circuito Tenex</h1><span class="muted">Checador de horarios</span></div><span class="beta">BETA · EN PRUEBA</span></header>
-<section class="card"><label for="stop">¿Dónde esperas la combi?</label><select id="stop"></select><p class="muted" style="font-size:12px;margin-bottom:0">Tu parada favorita se guarda en este teléfono.</p></section>
-<section class="card hero"><div class="muted">Próxima unidad estimada</div><div id="unit" class="unit">—</div><div id="next" class="time">—</div><p id="left" class="muted">Calculando…</p><button id="refresh">Actualizar</button></section>
-<section class="card grid"><div class="small"><span class="muted">Después pasa</span><b id="unit2">—</b><span id="time2">—</span></div><div class="small"><span class="muted">Hora actual</span><b id="now">—</b><span id="date" class="muted">—</span></div></section>
-<section class="card"><b>Próximas 8 combis</b><table><thead><tr><th>Unidad</th><th>Hora estimada</th><th>Faltan</th></tr></thead><tbody id="passes"></tbody></table></section>
-<section class="card"><b>Paradas del recorrido</b><div id="chips" class="chips" style="margin-top:12px"></div></section>
-<section class="card"><b>Ayúdanos a comprobar los horarios</b><p class="muted">Registra la hora real de paso cuando una combi llegue a tu parada.</p><details><summary>📝 Reportar hora real</summary><p><label for="real">Hora de paso</label><input id="real" type="time"></p><p><label for="note">Comentario opcional</label><input id="note" maxlength="180" placeholder="Ej. pasó tarde o llena"></p><button id="save">Guardar en este teléfono</button><p class="muted" style="font-size:12px">Los reportes no se envían ni comparten automáticamente.</p></details><details><summary>📋 Historial de reportes</summary><div id="history"></div><div class="row"><button id="export">Exportar</button><button id="clear">Borrar</button></div></details></section>
-<div class="notice"><b>Horario beta:</b> la primera salida se estima alrededor de las 6:04 a. m. a partir de la referencia conocida de las 12:12 p. m. y la frecuencia de 16 minutos. Debe confirmarse con pasos reales. No es un horario oficial.</div><div class="foot">Circuito Tenex · Versión beta · Horarios estimados</div>
-</main><script>
-const stops=[["Mercado",0],["Biblioteca",5],["Base Sr. P.",10],["Arco (ida)",18],["Gas Villa (ida)",27],["Cancha OL (ida)",31],["Herrería (ida)",36],["Z. Tenex",43],["C. de Salud",45],["Conasupo",50],["C. Constancio Farfán",53],["Herrería (regreso)",61],["Cancha (regreso)",66],["Gas Villa (regreso)",70],["Arco (regreso)",79]];
-const ref=12*60+12, spacing=16, nUnits=6;
-const $=id=>document.getElementById(id), sel=$("stop");
-stops.forEach((s,i)=>{let o=document.createElement("option");o.value=i;o.textContent=s[0];sel.append(o)});
-sel.value=localStorage.getItem("tenexStop")||"0";
-$("chips").innerHTML=stops.map((s,i)=>`<button class="chip" data-i="${i}">${s[0]}</button>`).join("");
-$("chips").onclick=e=>{let b=e.target.closest("[data-i]");if(b){sel.value=b.dataset.i;setStop()}};
-function mod(a,b){return (a%b+b)%b}
-function clock(m){m=mod(Math.round(m),1440);return String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0")}
-function nowM(){let d=new Date();return d.getHours()*60+d.getMinutes()+d.getSeconds()/60}
-function calc(count=8){let now=nowM(),off=stops[+sel.value][1],n=Math.floor((now-(ref+off))/spacing)-1,out=[];for(let i=0;i<160&&out.length<count;i++,n++){let t=ref+off+n*spacing;if(t>=now-.02)out.push({t,unit:mod(n,nUnits)+1,delta:t-now})}return out}
-function safe(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function reports(){try{return JSON.parse(localStorage.getItem("tenexReports")||"[]")}catch(e){return []}}
-function renderHistory(){let r=reports();$("history").innerHTML=r.length?r.map(x=>`<div class="report"><b>${safe(x.stop)}</b> · ${safe(x.time)}<br>${safe(x.note||"Sin comentario")}<br><span class="muted">${safe(x.at)}</span></div>`).join(""):"<p class='muted'>Sin reportes guardados.</p>"}
-function update(){let d=new Date(),a=calc(8),x=a[0];$("now").textContent=d.toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit"});$("date").textContent=d.toLocaleDateString("es-MX",{weekday:"short",day:"numeric",month:"short"});if(!x)return;$("unit").textContent="U"+x.unit;$("next").textContent=clock(x.t);$("left").textContent=x.delta<1?"Está pasando ahora":`Faltan aproximadamente ${Math.ceil(x.delta)} min`;$("unit2").textContent=a[1]?"U"+a[1].unit:"—";$("time2").textContent=a[1]?clock(a[1].t)+" · en "+Math.ceil(a[1].delta)+" min":"—";$("passes").innerHTML=a.map(p=>`<tr><td>U${p.unit}</td><td>${clock(p.t)}</td><td>${p.delta<1?"Ahora":Math.ceil(p.delta)+" min"}</td></tr>`).join("");renderHistory()}
-function setStop(){localStorage.setItem("tenexStop",sel.value);update()}sel.onchange=setStop;$("refresh").onclick=update;
-$("save").onclick=()=>{if(!$("real").value){alert("Selecciona la hora real.");return}let r=reports();r.unshift({stop:stops[+sel.value][0],time:$("real").value,note:$("note").value.trim(),at:new Date().toLocaleString("es-MX")});localStorage.setItem("tenexReports",JSON.stringify(r));$("real").value="";$("note").value="";renderHistory();alert("Reporte guardado en este teléfono.")};
-$("clear").onclick=()=>{if(confirm("¿Borrar los reportes de este teléfono?")){localStorage.removeItem("tenexReports");renderHistory()}};
-$("export").onclick=()=>{let blob=new Blob([JSON.stringify(reports(),null,2)],{type:"application/json"}),u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download="reportes-circuito-tenex.json";a.click();URL.revokeObjectURL(u)};
-update();setInterval(update,15000);if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
-</script></body></html>
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="description" content="Checador comunitario de combis en tiempo real estimado para la ruta Circuito Tenex y servicio reforzado en Tenextepango, Ayala, Morelos.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Circuito Tenex">
+  
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="./icon.svg">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <link rel="stylesheet" href="./styles.css">
+  
+  <title>Circuito Tenex · Checador de combis en tiempo real estimado</title>
+</head>
+<body>
+  <div class="wrap">
+    
+    <!-- Encabezado Principal -->
+    <header>
+      <div class="header-top">
+        <div class="header-title-group">
+          <img src="./icon.svg" alt="Logo Circuito Tenex" class="header-icon">
+          <div>
+            <h1>Circuito Tenex</h1>
+            <div class="subtitle">Checador de combis en tiempo real estimado</div>
+          </div>
+        </div>
+        <div class="header-badges">
+          <div id="status-service-pill" class="status-pill status-reinforced">🟡 Reforzado (~8 min)</div>
+          <div id="status-offline-pill" class="status-pill status-offline">📶 Sin red</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Banner de Servicio y Contingencia Vial -->
+    <div class="contingency-banner" id="contingency-banner">
+      <div class="banner-header">
+        <span>🚧 Aviso de contingencia vial</span>
+      </div>
+      <p class="banner-text">
+        Por trabajos de reparación en avenida, las unidades de la ruta <strong>Valle de Morelos</strong> recorren temporalmente el circuito y <strong>ahora también portan el letrero físico de «CIRCUITO TENEX»</strong> en el parabrisas. En esta app las identificamos como <em>«Antes Valle de Morelos»</em> para distinguirlas de las unidades habituales, intercalándose para lograr un paso cada <strong>~8 minutos</strong>.
+      </p>
+      <div class="mode-toggle-group">
+        <button type="button" id="mode-reinforced-btn" class="mode-btn active">
+          ⚡ Reforzado (Tenex + Antes Valle · ~8 min)
+        </button>
+        <button type="button" id="mode-normal-btn" class="mode-btn">
+          🚐 Modo Normal (Solo Tenex habitual · ~16 min)
+        </button>
+      </div>
+    </div>
+
+    <!-- Selector de Parada y Favoritos -->
+    <div class="card">
+      <div class="selector-header">
+        <label for="stop-select" class="selector-label">¿En qué parada estás o deseas consultar?</label>
+        <button type="button" id="fav-toggle-btn" class="fav-toggle-btn" title="Guardar como favorita">
+          ☆ Favorita
+        </button>
+      </div>
+      
+      <div class="select-wrapper">
+        <select id="stop-select" aria-label="Seleccionar parada"></select>
+      </div>
+
+      <!-- Barra de accesos rápidos a favoritos -->
+      <div class="favorites-bar" id="favorites-bar"></div>
+    </div>
+
+    <!-- Tarjeta Principal Hero (Próxima Combi) -->
+    <div class="card hero-card">
+      <div class="hero-stop-title" id="hero-stop-title">Calle Constancio Farfán</div>
+      <div class="hero-direction" id="hero-direction">Zona Tenextepango (Retorno)</div>
+      
+      <div>
+        <span class="hero-unit-tag badge-tenex" id="hero-unit-tag">Circuito Tenex · Unidad 1</span>
+      </div>
+
+      <div class="hero-sign-notice" id="hero-sign-notice">🏷️ Lleva letrero: CIRCUITO TENEX</div>
+      
+      <div class="hero-time" id="hero-time">—:—</div>
+      <div class="hero-countdown countdown-normal" id="hero-countdown">Calculando llegada...</div>
+      
+      <div>
+        <span class="certainty-badge" id="hero-certainty">Horario de referencia (16 min)</span>
+      </div>
+    </div>
+
+    <!-- Próximas Unidades (Siguiente y Posterior) -->
+    <div class="next-grid">
+      <div class="next-card" id="next1-card">
+        <div class="next-card-label">Siguiente unidad</div>
+        <div class="next-card-content">
+          <div>
+            <div class="next-unit-title" id="next1-title">—</div>
+            <div class="next-countdown" id="next1-countdown">—</div>
+          </div>
+          <div class="next-time" id="next1-time">—:—</div>
+        </div>
+      </div>
+
+      <div class="next-card" id="next2-card">
+        <div class="next-card-label">Unidad posterior</div>
+        <div class="next-card-content">
+          <div>
+            <div class="next-unit-title" id="next2-title">—</div>
+            <div class="next-countdown" id="next2-countdown">—</div>
+          </div>
+          <div class="next-time" id="next2-time">—:—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tira de Recorrido y Paradas Autorizadas -->
+    <div class="card">
+      <div class="section-title">📍 Recorrido y paradas autorizadas</div>
+      <div style="font-size:12px;color:#64748b;margin-bottom:6px;">Toca cualquier parada para consultar sus horarios:</div>
+      <div class="route-strip" id="route-strip"></div>
+    </div>
+
+    <!-- Próximos Pasos (Tabla Cronológica) -->
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <div class="section-title" style="margin:0;">⏱️ Próximas salidas estimadas</div>
+        <div style="font-size:12px;color:#64748b;">Hora actual: <strong id="current-time-display">—</strong></div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Ruta / Unidad</th>
+              <th>Hora estimada</th>
+              <th>Tiempo restante</th>
+            </tr>
+          </thead>
+          <tbody id="arrivals-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Reportes Comunitarios de Paso (Almacenamiento Local) -->
+    <div class="card">
+      <div class="reports-header">
+        <div class="section-title" style="margin:0;">👥 Reportes de paso comunitarios</div>
+        <button type="button" class="btn-report" id="btn-open-report-modal">
+          + Reportar combi
+        </button>
+      </div>
+      <div class="reports-notice">
+        ℹ️ <strong>Almacenamiento local en este teléfono:</strong> Los reportes se guardan en la memoria de tu dispositivo para que lleves tu historial y confirmes variaciones reales. Cuando esté disponible un servidor compartido, podrán sincronizarse entre usuarios.
+      </div>
+      <div class="reports-list" id="reports-list"></div>
+    </div>
+
+    <!-- Información del Servicio y Transparencia -->
+    <div class="card">
+      <div class="section-title">ℹ️ Información y límites del servicio</div>
+      <div class="info-accordion">
+        <div class="info-item">
+          <span class="info-key">Primera salida matutina (Tenex):</span>
+          <span class="info-val">~06:04 a. m. en Mercado Cuautla (Estimada)</span>
+        </div>
+        <div class="info-item">
+          <span class="info-key">Primera salida desde base:</span>
+          <span class="info-val">Pendiente de confirmar</span>
+        </div>
+        <div class="info-item">
+          <span class="info-key">Último servicio de Tenex:</span>
+          <span class="info-val">Pendiente de confirmar</span>
+        </div>
+        <div class="info-item">
+          <span class="info-key">Primera y última salida Valle de Morelos:</span>
+          <span class="info-val">Pendientes de confirmar</span>
+        </div>
+        <div class="info-item">
+          <span class="info-key">Duración de vuelta completa:</span>
+          <span class="info-val">~96 minutos</span>
+        </div>
+        <div class="info-item">
+          <span class="info-key">Parada anterior Crucero Abelardo:</span>
+          <span class="info-val" style="color:#b91c1c;">No autorizada</span>
+        </div>
+      </div>
+
+      <div class="disclaimer-box">
+        <strong>Aviso de transparencia:</strong> Este sistema calcula horarios estimados en base a la frecuencia oficial de 16 minutos de Circuito Tenex y el intercalado temporal de 8 minutos con Valle de Morelos. <strong>No utiliza rastreo satelital GPS en tiempo real</strong> de las unidades. Las horas de llegada pueden fluctuar por tráfico, clima o condiciones operativas de los concesionarios.
+      </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer>
+      <div>Circuito Tenex · Tenextepango, Ayala, Morelos</div>
+      <div style="margin-top:4px;">Versión 2.0.0 PWA · Instalable en Android</div>
+      <button type="button" class="footer-btn" id="btn-force-update">
+        🔄 Buscar actualizaciones de la app
+      </button>
+    </footer>
+
+  </div>
+
+  <!-- Modal para Registrar Reporte -->
+  <div class="modal-overlay" id="report-modal">
+    <div class="modal-card">
+      <div class="modal-title">
+        <span>🚐 Reportar paso de combi</span>
+        <button type="button" class="btn-close" id="btn-close-report-modal">✕</button>
+      </div>
+
+      <form id="report-form">
+        <div class="form-group">
+          <label for="report-stop">Parada donde observaste la combi</label>
+          <select id="report-stop" name="reportStop" class="form-control" id="report-stop-select">
+            <!-- Rellenado por app.js -->
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="report-route">Ruta / Unidad observada</label>
+          <select id="report-route" name="reportRoute" class="form-control">
+            <option value="Circuito Tenex (Habitual)">Circuito Tenex (Unidad habitual)</option>
+            <option value="Antes Valle de Morelos (Letrero Tenex)">Antes Valle de Morelos (Trae letrero Tenex)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="report-direction">Sentido del recorrido</label>
+          <select id="report-direction" name="reportDirection" class="form-control">
+            <option value="Ida a Tenextepango">Ida a Tenextepango</option>
+            <option value="Regreso a Cuautla">Regreso a Cuautla</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="report-status">¿Cómo pasó la combi?</label>
+          <select id="report-status" name="reportStatus" class="form-control">
+            <option value="A tiempo">Pasó a tiempo (horario normal)</option>
+            <option value="Adelantada">Pasó adelantada</option>
+            <option value="Con retraso">Pasó con retraso</option>
+            <option value="No pasó">No pasó en el horario previsto</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="report-diff">Diferencia aproximada en minutos (opcional)</label>
+          <select id="report-diff" name="reportDiff" class="form-control">
+            <option value="0">0 minutos (a tiempo)</option>
+            <option value="-1">1 min antes</option>
+            <option value="-2">2 min antes</option>
+            <option value="-3">3 min antes</option>
+            <option value="+2">2 min tarde</option>
+            <option value="+5">5 min tarde</option>
+            <option value="+10">10+ min tarde</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="report-note">Comentario o detalle adicional (opcional)</label>
+          <input type="text" id="report-note" name="reportNote" class="form-control" placeholder="Ej. Lleno, sin parada, lluvia...">
+        </div>
+
+        <button type="submit" class="btn-submit">Guardar reporte en este dispositivo</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./config.js"></script>
+  <script src="./app.js" defer></script>
+</body>
+</html>
