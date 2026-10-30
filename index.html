@@ -77,14 +77,14 @@
     .dir-btn .dir-sub { display: block; font-size: 11px; opacity: 0.85; }
     
     .dir-btn.active { 
-      background: #0284c7; 
+      background: #65a30d; 
       color: #ffffff; 
-      border-color: #0284c7; 
-      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35); 
+      border-color: #4d7c0f; 
+      box-shadow: 0 4px 14px rgba(101, 163, 13, 0.4); 
     }
     .dir-btn.active .dir-icon-wrap {
       background: #ffffff;
-      color: #0284c7;
+      color: #65a30d;
     }
 
     /* Hero Card en Azul Celeste */
@@ -194,10 +194,12 @@
     <i>Nota:</i> Todas llevan el letrero físico <b>"Tenex-Heredia Circuito"</b>; aquí te indicamos cuáles provienen de Valle de Morelos.
   </div>
 
-  <!-- Selector de Sentido de la Ruta con Siluetas Oficiales -->
-  <section class="card">
-    <label>Selecciona el sentido de tu viaje:</label>
-    <div class="dir-grid">
+  <!-- Tarjeta Unificada: Selector + Hero de Próxima Llegada -->
+  <section class="card hero">
+
+    <!-- Selector de Sentido -->
+    <label style="color:#bae6fd;font-size:13px;font-weight:600;letter-spacing:.3px">Selecciona el sentido de tu viaje:</label>
+    <div class="dir-grid" style="margin-top:8px">
       <!-- Botón Cuautla con Silueta de José María Morelos -->
       <button type="button" class="dir-btn active" id="btn-dir-0" onclick="switchDir(0)">
         <div class="dir-icon-wrap" id="wrap-icon-0">
@@ -288,13 +290,14 @@
       </button>
     </div>
 
-    <label for="stop">¿En qué parada estás?</label>
-    <select id="stop"></select>
-    <p class="muted" style="font-size:12px;margin:8px 0 0 0">Tu parada y sentido se guardan en este teléfono.</p>
-  </section>
+    <label for="stop" style="color:#bae6fd;font-size:13px;font-weight:600;margin-top:10px;display:block">¿En qué parada estás?</label>
+    <select id="stop" style="background:#0369a1;color:#fff;border-color:#38bdf8"></select>
+    <p class="muted" style="font-size:12px;margin:6px 0 0 0;color:#7dd3fc">Tu parada y sentido se guardan en este teléfono.</p>
 
-  <!-- Tarjeta Hero de Próxima Llegada -->
-  <section class="card hero">
+    <!-- Divisor -->
+    <div style="border-top:1px solid rgba(255,255,255,0.2);margin:14px 0"></div>
+
+    <!-- Dirección activa -->
     <div>
       <span id="hero-dir" class="hero-dir">
         <span id="hero-dir-icon"></span>
@@ -433,12 +436,6 @@
     </table>
   </section>
 
-  <!-- Paradas del sentido seleccionado -->
-  <section class="card">
-    <b id="stops-title">Paradas de este sentido</b>
-    <div id="chips" class="chips" style="margin-top:12px"></div>
-  </section>
-
   <!-- Reportes Ciudadanos -->
   <section class="card">
     <b>Ayúdanos a comprobar los horarios</b>
@@ -547,7 +544,7 @@ function renderStopsForCurrentDir() {
   
   $("hero-dir-text").textContent = r.name;
   $("hero-dir-icon").innerHTML = r.icon;
-  $("stops-title").textContent = "Paradas de " + r.shortName;
+
 
   sel.innerHTML = "";
   r.stops.forEach((s, i) => {
@@ -564,25 +561,8 @@ function renderStopsForCurrentDir() {
     sel.value = "0";
   }
 
-  renderChips();
   update();
 }
-
-function renderChips() {
-  let r = routes[curDir];
-  let curStopIdx = +sel.value;
-  $("chips").innerHTML = r.stops.map((s, i) =>
-    `<button class="chip ${i === curStopIdx ? 'active' : ''}" data-i="${i}">${s.name}</button>`
-  ).join("");
-}
-
-$("chips").onclick = e => {
-  let b = e.target.closest("[data-i]");
-  if (b) {
-    sel.value = b.dataset.i;
-    setStop();
-  }
-};
 
 function switchDir(dirIdx) {
   curDir = dirIdx;
@@ -743,7 +723,6 @@ function update() {
 
 function setStop() {
   localStorage.setItem("tenexStopIdx_" + curDir, sel.value);
-  renderChips();
   update();
 }
 
