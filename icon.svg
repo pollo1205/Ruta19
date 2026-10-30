@@ -1,1 +1,249 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="96" fill="#10243a"/><text x="256" y="340" text-anchor="middle" font-size="280">🚐</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="skyBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="roofGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="70%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+    <linearGradient id="chromeGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="45%" stop-color="#e2e8f0"/>
+      <stop offset="55%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#cbd5e1"/>
+    </linearGradient>
+    <linearGradient id="glassGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="40%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <filter id="hiaceShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#012a42" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  
+  <!-- Fondo App Icon redondeado en Azul Celeste -->
+  <rect width="512" height="512" rx="115" fill="url(#skyBg)"/>
+  
+  <!-- Círculos decorativos y brillo de fondo -->
+  <circle cx="430" cy="80" r="140" fill="#ffffff" opacity="0.08"/>
+  <circle cx="80" cy="440" r="160" fill="#024e7a" opacity="0.25"/>
+
+  <!-- Placa superior: RUTA 19 · CIRCUITO TENEX-HEREDIA -->
+  <g id="badge-top">
+    <rect x="76" y="36" width="360" height="64" rx="32" fill="#ffffff" opacity="0.96" filter="drop-shadow(0 4px 8px rgba(0,0,0,0.15))"/>
+    <text x="256" y="72" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="23" font-weight="900" fill="#0284c7" text-anchor="middle" letter-spacing="1.5">RUTA 19</text>
+    <text x="256" y="90" font-family="system-ui, sans-serif" font-size="11" font-weight="800" fill="#16a34a" text-anchor="middle" letter-spacing="2">CIRCUITO TENEX-HEREDIA</text>
+  </g>
+  
+
+  <!-- SOMBRA DEL VEHÍCULO EN EL PISO -->
+  <ellipse cx="256" cy="425" rx="205" ry="24" fill="#012a42" opacity="0.5"/>
+  <ellipse cx="240" cy="420" rx="175" ry="15" fill="#011b2b" opacity="0.6"/>
+
+  <!-- VEHÍCULO TOYOTA HIACE TOLDO ALTO -->
+  <g id="toyota-hiace" filter="url(#hiaceShadow)">
+
+    <!-- RUEDAS (Exactas a la foto: rines con 6 orificios y tapón central) -->
+    <!-- Rueda Trasera -->
+    <g id="wheel-rear">
+      <ellipse cx="388" cy="365" rx="32" ry="34" fill="#0f172a"/>
+      <ellipse cx="388" cy="365" rx="22" ry="23" fill="#cbd5e1"/>
+      <ellipse cx="388" cy="365" rx="18" ry="19" fill="#94a3b8"/>
+      <!-- Orificios del rin -->
+      <circle cx="388" cy="353" r="3.5" fill="#334155"/>
+      <circle cx="398" cy="359" r="3.5" fill="#334155"/>
+      <circle cx="398" cy="371" r="3.5" fill="#334155"/>
+      <circle cx="388" cy="377" r="3.5" fill="#334155"/>
+      <circle cx="378" cy="371" r="3.5" fill="#334155"/>
+      <circle cx="378" cy="359" r="3.5" fill="#334155"/>
+      <!-- Tapón central Toyota -->
+      <circle cx="388" cy="365" r="7" fill="#e2e8f0"/>
+      <circle cx="388" cy="365" r="3" fill="#64748b"/>
+    </g>
+
+    <!-- Rueda Delantera -->
+    <g id="wheel-front">
+      <ellipse cx="162" cy="368" rx="34" ry="36" fill="#0f172a"/>
+      <ellipse cx="162" cy="368" rx="23" ry="24" fill="#cbd5e1"/>
+      <ellipse cx="162" cy="368" rx="19" ry="20" fill="#94a3b8"/>
+      <!-- Orificios del rin -->
+      <circle cx="162" cy="355" r="4" fill="#334155"/>
+      <circle cx="173" cy="361" r="4" fill="#334155"/>
+      <circle cx="173" cy="375" r="4" fill="#334155"/>
+      <circle cx="162" cy="381" r="4" fill="#334155"/>
+      <circle cx="151" cy="375" r="4" fill="#334155"/>
+      <circle cx="151" cy="361" r="4" fill="#334155"/>
+      <!-- Tapón central Toyota -->
+      <circle cx="162" cy="368" r="8" fill="#e2e8f0"/>
+      <circle cx="162" cy="368" r="3.5" fill="#64748b"/>
+    </g>
+
+    <!-- CARROCERÍA: TOLDO ALTO Y COSTADO BLANCO (Fiel a la foto) -->
+    <!-- Costado principal -->
+    <path d="
+      M 186 160
+      C 230 156, 380 162, 418 168
+      C 426 169, 432 176, 434 186
+      L 442 328
+      C 442 338, 435 348, 422 350
+      L 416 350
+      C 414 330, 362 330, 360 350
+      L 198 350
+      C 196 330, 128 330, 126 350
+      L 105 350
+      L 98 316
+      L 186 160 Z
+    " fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+
+    <!-- TOLDO ALTO (High Roof con la caída/frente aerodinámico característico de la foto) -->
+    <path d="
+      M 186 160
+      C 160 162, 134 175, 122 192
+      C 114 204, 110 216, 108 226
+      L 180 220
+      L 418 208
+      C 418 196, 412 178, 396 170
+      C 370 162, 230 156, 186 160 Z
+    " fill="url(#roofGrad)" stroke="#cbd5e1" stroke-width="1.5"/>
+
+    <!-- FRENTE DE LA HIACE (3/4 Ángulo frontal exacto al de la foto) -->
+    <path d="
+      M 180 220
+      L 108 226
+      C 102 232, 94 246, 90 260
+      L 76 320
+      C 73 336, 78 348, 92 352
+      L 112 354
+      L 178 350
+      L 180 220 Z
+    " fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+
+    <!-- PARABRISAS FRONTAL CON VISERA NEGRA -->
+    <path d="
+      M 174 225
+      L 112 232
+      C 108 238, 104 248, 100 260
+      L 94 286
+      L 170 278
+      L 174 225 Z
+    " fill="url(#glassGrad)"/>
+    <!-- Reflejo parabrisas -->
+    <path d="
+      M 166 230
+      L 116 236
+      C 113 241, 110 248, 108 255
+      L 103 276
+      L 126 273
+      L 166 230 Z
+    " fill="#38bdf8" opacity="0.35"/>
+
+    <!-- VENTANAS PANORÁMICAS OSCURAS (Exactas a la foto: tinte continuo con divisores de ventanillas corredizas) -->
+    <path d="
+      M 188 220
+      L 416 210
+      C 424 210, 430 216, 431 226
+      L 434 278
+      L 188 284
+      Z
+    " fill="#0f172a"/>
+    <!-- Reflejo horizontal en cristal lateral -->
+    <line x1="194" y1="232" x2="424" y2="222" stroke="#67e8f9" stroke-width="2.5" opacity="0.45"/>
+    <!-- Marco de ventanilla corrediza interna (como en la foto de la Hiace) -->
+    <rect x="290" y="234" width="46" height="34" rx="4" fill="none" stroke="#334155" stroke-width="2"/>
+    <rect x="360" y="232" width="46" height="34" rx="4" fill="none" stroke="#334155" stroke-width="2"/>
+
+    <!-- VENTANA DE CONDUCTOR / PUERTA DELANTERA -->
+    <path d="
+      M 180 226
+      L 185 284
+      L 124 287
+      L 120 252
+      C 122 240, 126 232, 134 228
+      Z
+    " fill="#1e293b"/>
+    <line x1="130" y1="238" x2="180" y2="234" stroke="#67e8f9" stroke-width="2" opacity="0.4"/>
+
+    <!-- ==================================================== -->
+    <!-- FRANJAS DE LA RUTA 19 (AZUL Y VERDE DELGADA)         -->
+    <!-- 1. FRENTE: VERTICALES | 2. COSTADO: HORIZONTALES     -->
+    <!-- ==================================================== -->
+
+    <!-- FRENTE: Franja Azul Vertical (baja desde el parabrisas hasta la fascia) -->
+    <path d="M 134 280 L 152 278 L 148 348 L 130 350 Z" fill="#0284c7"/>
+    <!-- FRENTE: Pequeña Franja Verde Vertical -->
+    <path d="M 154 278 L 162 277 L 158 347 L 150 348 Z" fill="#16a34a"/>
+
+    <!-- COSTADO: Franja Azul Horizontal (corre a lo largo debajo de los cristales) -->
+    <path d="
+      M 186 295
+      L 435 288
+      L 436 308
+      L 186 314
+      Z
+    " fill="#0284c7"/>
+    <!-- COSTADO: Pequeña Franja Verde Horizontal (acompaña en la parte baja) -->
+    <path d="
+      M 186 316
+      L 436 310
+      L 437 320
+      L 186 325
+      Z
+    " fill="#16a34a"/>
+
+    <!-- FAROS DELANTEROS HIACE (Fieles al modelo de la foto: grandes bloques transparentes) -->
+    <!-- Faro izquierdo principal -->
+    <path d="
+      M 86 296
+      L 108 292
+      L 104 324
+      L 80 321
+      C 80 310, 82 302, 86 296 Z
+    " fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <path d="M 88 300 L 102 297 L 100 320 L 84 318 Z" fill="#fef08a" opacity="0.8"/>
+    <!-- Direccional ámbar exterior -->
+    <path d="M 80 310 L 86 298 L 84 321 Z" fill="#f59e0b"/>
+
+    <!-- PARRILLA CROMADA TOYOTA (Como en la foto: doble barra gruesa en cromo) -->
+    <path d="M 108 296 L 174 288 L 172 308 L 106 314 Z" fill="url(#chromeGrad)" stroke="#94a3b8" stroke-width="1"/>
+    <!-- Barra inferior cromada -->
+    <path d="M 104 316 L 171 310 L 170 326 L 102 331 Z" fill="url(#chromeGrad)" stroke="#94a3b8" stroke-width="1"/>
+    
+    <!-- Emblema Toyota oval central cromado -->
+    <ellipse cx="138" cy="302" rx="9" ry="6.5" fill="#ffffff" stroke="#475569" stroke-width="1.5"/>
+    <ellipse cx="138" cy="302" rx="5" ry="3" fill="#cbd5e1"/>
+
+    <!-- BUMPER / FASCIA DELANTERA (Con tomas de aire laterales como la foto) -->
+    <path d="
+      M 76 322
+      L 172 316
+      L 171 350
+      L 94 353
+      C 82 350, 76 338, 76 322 Z
+    " fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+    <!-- Toma de aire lateral izquierda del bumper (hendidura oscura de la foto) -->
+    <rect x="84" y="328" width="12" height="18" rx="4" fill="#334155"/>
+    <!-- Portaplacas central en bumper -->
+    <rect x="114" y="332" width="34" height="15" rx="3" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1"/>
+
+    <!-- ESPEJO RETROVISOR (Negro en el marco como en la foto) -->
+    <path d="M 102 264 L 88 266 C 84 266, 82 270, 83 276 L 86 288 L 100 285 Z" fill="#1e293b"/>
+
+    <!-- LÍNEAS DE CARROCERÍA Y MANIJAS CROMADAS -->
+    <line x1="188" y1="284" x2="188" y2="350" stroke="#cbd5e1" stroke-width="2"/>
+    <line x1="280" y1="284" x2="280" y2="350" stroke="#cbd5e1" stroke-width="1.5"/>
+    <!-- Manija cromada de puerta delantera -->
+    <rect x="198" y="290" width="16" height="5" rx="2" fill="url(#chromeGrad)" stroke="#94a3b8" stroke-width="0.8"/>
+    <!-- Manija de puerta corrediza -->
+    <rect x="290" y="290" width="16" height="5" rx="2" fill="url(#chromeGrad)" stroke="#94a3b8" stroke-width="0.8"/>
+
+    <!-- DISTINTIVO '19' DE LA RUTA EN EL COSTADO -->
+    <rect x="325" y="294" width="32" height="20" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="2" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.2))"/>
+    <text x="341" y="309" font-family="system-ui, sans-serif" font-size="14" font-weight="900" fill="#0284c7" text-anchor="middle">19</text>
+  </g>
+</svg>

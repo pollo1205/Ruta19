@@ -3,71 +3,184 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#10243a">
+  <meta name="theme-color" content="#0284c7">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icon.svg">
-  <title>Ruta 19 · Circuito Tenex & Valle de Morelos</title>
+  <title>Ruta 19 · Circuito Tenex-Heredia & Valle de Morelos</title>
   <style>
     * { box-sizing: border-box; }
-    body { margin: 0; background: #eef3f7; color: #172b3d; font: 16px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { 
+      margin: 0; 
+      background: #f0f7fc; 
+      color: #0f172a; 
+      font: 16px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+    }
     main { max-width: 680px; margin: auto; padding: 15px; }
-    .card { background: #fff; border-radius: 17px; padding: 17px; margin: 0 0 13px; box-shadow: 0 3px 14px rgba(18, 49, 70, 0.07); }
-    h1 { font-size: 21px; margin: 0; }
-    .muted { color: #637589; }
-    .beta { background: #fff0c2; color: #805600; border-radius: 20px; padding: 5px 9px; font-size: 11px; font-weight: bold; white-space: nowrap; }
+    
+    .card { 
+      background: #ffffff; 
+      border-radius: 18px; 
+      padding: 17px; 
+      margin: 0 0 13px; 
+      box-shadow: 0 4px 16px rgba(2, 132, 199, 0.08); 
+      border: 1px solid #e0f2fe;
+    }
+    h1 { font-size: 21px; margin: 0; color: #0369a1; }
+    .muted { color: #64748b; }
+    .beta { background: #fef3c7; color: #92400e; border-radius: 20px; padding: 5px 9px; font-size: 11px; font-weight: bold; white-space: nowrap; }
     .head { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
-    label { display: block; font-weight: bold; margin-bottom: 8px; }
-    select, input, button { font: inherit; padding: 12px; border-radius: 10px; border: 1px solid #cbd5e1; width: 100%; }
-    button { background: #10243a; color: white; border: 0; font-weight: bold; cursor: pointer; transition: all .15s ease; }
-    button:hover { opacity: 0.93; }
+    label { display: block; font-weight: bold; margin-bottom: 8px; color: #0f172a; }
+    select, input, button { font: inherit; padding: 12px; border-radius: 10px; border: 1px solid #bae6fd; width: 100%; }
+    
+    /* Botones principales en Azul Celeste */
+    button { 
+      background: #0284c7; 
+      color: white; 
+      border: 0; 
+      font-weight: bold; 
+      cursor: pointer; 
+      transition: all .15s ease; 
+    }
+    button:hover { background: #0369a1; }
 
     /* Selector de sentido / dirección */
     .dir-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
-    .dir-btn { background: #f1f5f9; color: #334155; border: 2px solid #e2e8f0; padding: 10px 8px; border-radius: 12px; text-align: center; cursor: pointer; }
+    .dir-btn { 
+      background: #f8fafc; 
+      color: #334155; 
+      border: 2px solid #bae6fd; 
+      padding: 10px 8px; 
+      border-radius: 14px; 
+      text-align: center; 
+      cursor: pointer; 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: all .2s ease;
+    }
+    .dir-btn .dir-icon-wrap {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #e0f2fe;
+      color: #0284c7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2px;
+      transition: all .2s ease;
+    }
+    .dir-btn svg { width: 24px; height: 24px; }
     .dir-btn .dir-title { display: block; font-size: 13px; font-weight: 800; }
-    .dir-btn .dir-sub { display: block; font-size: 11px; opacity: 0.8; margin-top: 2px; }
-    .dir-btn.active { background: #10243a; color: #fff; border-color: #10243a; box-shadow: 0 4px 10px rgba(16, 36, 58, 0.25); }
+    .dir-btn .dir-sub { display: block; font-size: 11px; opacity: 0.85; }
+    
+    .dir-btn.active { 
+      background: #0284c7; 
+      color: #ffffff; 
+      border-color: #0284c7; 
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35); 
+    }
+    .dir-btn.active .dir-icon-wrap {
+      background: #ffffff;
+      color: #0284c7;
+    }
 
-    .hero { text-align: center; background: #10243a; color: white; padding: 22px; position: relative; }
-    .hero .muted { color: #d1deea; }
-    .hero-dir { display: inline-block; background: rgba(255, 255, 255, 0.15); padding: 4px 11px; border-radius: 14px; font-size: 12px; font-weight: bold; margin-bottom: 6px; }
-    .unit { font-size: 52px; font-weight: 850; margin: 4px 0; }
-    .time { font-size: 28px; font-weight: 750; margin-top: 4px; }
+    /* Hero Card en Azul Celeste */
+    .hero { 
+      text-align: center; 
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); 
+      color: white; 
+      padding: 20px; 
+      position: relative; 
+      border: none;
+    }
+    .hero .muted { color: #e0f2fe; }
+    .hero-dir { 
+      display: inline-flex; 
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.18); 
+      padding: 5px 14px; 
+      border-radius: 16px; 
+      font-size: 13px; 
+      font-weight: bold; 
+      margin-bottom: 8px; 
+    }
+    .hero-dir svg { width: 18px; height: 18px; vertical-align: middle; }
+    
+    .unit { font-size: 52px; font-weight: 850; margin: 4px 0; letter-spacing: -0.5px; }
+    .time { font-size: 29px; font-weight: 750; margin-top: 4px; }
+    
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
-    .small { background: #f1f5f9; padding: 12px; border-radius: 12px; }
-    .small b { display: block; font-size: 18px; margin-top: 5px; }
+    .small { background: #f0f9ff; padding: 12px; border-radius: 12px; border: 1px solid #e0f2fe; }
+    .small b { display: block; font-size: 18px; margin-top: 5px; color: #0369a1; }
+    
     table { width: 100%; border-collapse: collapse; }
-    td, th { text-align: left; padding: 9px 5px; border-bottom: 1px solid #e1e8ee; }
-    th { font-size: 12px; color: #637589; }
+    td, th { text-align: left; padding: 9px 5px; border-bottom: 1px solid #e2e8f0; }
+    th { font-size: 12px; color: #64748b; }
+    
     .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-    .chip { width: auto; background: #e7eef4; color: #183c59; padding: 7px 11px; font-size: 13px; border-radius: 8px; }
-    .chip.active { background: #10243a; color: #fff; font-weight: bold; }
-    details { margin-top: 12px; border-top: 1px solid #e1e8ee; padding-top: 12px; }
-    summary { font-weight: bold; cursor: pointer; }
+    .chip { 
+      width: auto; 
+      background: #e0f2fe; 
+      color: #0369a1; 
+      padding: 7px 11px; 
+      font-size: 13px; 
+      border-radius: 9px; 
+      border: 1px solid #bae6fd;
+    }
+    .chip.active { 
+      background: #0284c7; 
+      color: #fff; 
+      border-color: #0284c7;
+      font-weight: bold; 
+    }
+    
+    details { margin-top: 12px; border-top: 1px solid #e2e8f0; padding-top: 12px; }
+    summary { font-weight: bold; cursor: pointer; color: #0284c7; }
     .row { display: flex; gap: 8px; }
     .row > * { flex: 1; }
-    .report { border-bottom: 1px solid #e1e8ee; padding: 9px 0; font-size: 13px; }
+    .report { border-bottom: 1px solid #e2e8f0; padding: 9px 0; font-size: 13px; }
     .notice { padding: 13px; border-radius: 12px; font-size: 13px; margin-bottom: 13px; line-height: 1.45; }
     .alert-works { background: #fff7ed; border-left: 4px solid #ea580c; color: #7c2d12; }
-    .foot { text-align: center; font-size: 12px; color: #637589; padding: 10px; }
+    .foot { text-align: center; font-size: 12px; color: #64748b; padding: 10px; }
     
     /* Etiquetas visuales */
     .tag { display: inline-block; padding: 2px 7px; border-radius: 10px; font-size: 11px; font-weight: 700; white-space: nowrap; vertical-align: middle; }
-    .tag-tenex { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+    .tag-tenex { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; }
     .tag-valle { background: #ffedd5; color: #c2410c; border: 1px solid #fed7aa; }
-    .hero-badge { display: inline-block; padding: 5px 12px; border-radius: 18px; font-size: 13px; font-weight: bold; margin: 6px 0 10px; }
-    .hero-badge.tenex { background: #0284c7; color: #fff; }
+    .hero-badge { display: inline-block; padding: 5px 12px; border-radius: 18px; font-size: 13px; font-weight: bold; margin: 6px 0 8px; }
+    .hero-badge.tenex { background: #ffffff; color: #0284c7; box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
     .hero-badge.valle { background: #ea580c; color: #fff; }
-    .sign-notice { background: rgba(255,255,255,0.12); padding: 7px 12px; border-radius: 8px; font-size: 12px; margin-top: 8px; display: inline-block; }
+    
+    .sign-notice { 
+      background: rgba(255,255,255,0.16); 
+      padding: 7px 12px; 
+      border-radius: 8px; 
+      font-size: 12px; 
+      margin-top: 8px; 
+      display: inline-block; 
+    }
     .u-cell { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
     .u-name { font-weight: bold; font-size: 15px; }
+
+    /* Toyota Hiace Visual Badge */
+    .hiace-hero-img {
+      width: 140px;
+      height: auto;
+      margin: 8px auto 2px;
+      display: block;
+      filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.2));
+    }
   </style>
 </head>
 <body>
 <main>
   <header class="card head">
     <div>
-      <h1>🚐 Ruta 19 · Circuito Tenex</h1>
+      <h1>🚐 Ruta 19 · Circuito Tenex-Heredia</h1>
       <span class="muted">Checador de horarios · Pasa cada 8 min</span>
     </div>
     <span class="beta">BETA · EN PRUEBA</span>
@@ -76,21 +189,101 @@
   <!-- Aviso de reasignación temporal de unidades -->
   <div class="notice alert-works">
     <b>🚧 Aviso por obras en Valle de Morelos:</b><br>
-    La subruta Valle de Morelos está suspendida temporalmente por obras en su avenida principal. Sus unidades fueron transferidas a <b>Tenex Circuito</b>.<br>
-    Las combis pasan cada <b>8 minutos</b> (intercaladas: 1 Tenex y 1 Valle).<br>
-    <i>Nota:</i> Todas llevan el letrero físico <b>"Tenex Circuito"</b>; aquí te indicamos cuáles serian de Valle de Morelos.
+    La subruta Valle de Morelos está suspendida temporalmente por obras en su avenida principal. Sus unidades fueron transferidas a <b>Circuito Tenex-Heredia</b>.<br>
+    Las combis pasan cada <b>8 minutos</b> (intercaladas: 1 Tenex-Heredia y 1 Valle).<br>
+    <i>Nota:</i> Todas llevan el letrero físico <b>"Tenex-Heredia Circuito"</b>; aquí te indicamos cuáles provienen de Valle de Morelos.
   </div>
 
-  <!-- Selector de Sentido de la Ruta -->
+  <!-- Selector de Sentido de la Ruta con Siluetas Oficiales -->
   <section class="card">
     <label>Selecciona el sentido de tu viaje:</label>
     <div class="dir-grid">
+      <!-- Botón Cuautla con Silueta de José María Morelos -->
       <button type="button" class="dir-btn active" id="btn-dir-0" onclick="switchDir(0)">
-        <span class="dir-title">🏙️ ➔ 🌄 CUAUTLA - TENEX</span>
+        <div class="dir-icon-wrap" id="wrap-icon-0">
+          <svg viewBox="0 0 64 64" fill="currentColor">
+            <!-- Silueta Gral. José María Morelos y Pavón con paliacate -->
+            <path d="
+              M 32 6
+              C 22 6, 15 12, 14 20
+              C 13 23, 11 27, 9 32
+              C 8 36, 9 40, 12 42
+              C 10 45, 8 50, 6 56
+              C 5 59, 8 60, 12 58
+              C 16 56, 19 50, 21 46
+              L 21 58
+              C 21 61, 23 62, 27 62
+              L 48 62
+              C 52 62, 54 58, 52 54
+              C 50 49, 45 44, 42 42
+              C 43 40, 45 38, 44 36
+              C 42 35, 40 35, 39 36
+              C 38 36, 38 34, 39 33
+              C 41 32, 43 32, 42 30
+              C 41 29, 39 29, 38 30
+              C 38 29, 40 28, 43 27
+              C 45 26, 46 24, 44 23
+              C 41 22, 39 23, 37 24
+              C 36 21, 35 18, 35 16
+              C 40 17, 44 15, 45 13
+              C 43 9, 38 6, 32 6 Z
+              M 20 22
+              C 22 16, 28 13, 34 14
+              C 32 17, 27 19, 20 22 Z
+            "/>
+          </svg>
+        </div>
+        <span class="dir-title">CUAUTLA ➔ TENEX</span>
         <span class="dir-sub">Del Mercado al C. de Salud</span>
       </button>
+
+      <!-- Botón Tenex con Silueta de Santiago Apóstol -->
       <button type="button" class="dir-btn" id="btn-dir-1" onclick="switchDir(1)">
-        <span class="dir-title">🌄 ➔ 🏙️ TENEX - CUAUTLA</span>
+        <div class="dir-icon-wrap" id="wrap-icon-1">
+          <svg viewBox="0 0 64 64" fill="currentColor">
+            <!-- Silueta Señor Santiago Apóstol en caballo encabritado con espada -->
+            <path d="
+              M 33 4
+              C 31 4, 30 6, 31 8
+              C 31 10, 33 11, 35 10
+              L 44 5
+              L 43 4
+              L 36 7
+              C 35 5, 34 4, 33 4 Z
+              M 29 10
+              C 27 10, 25 12, 26 14
+              C 27 16, 29 16, 30 14
+              C 31 12, 30 10, 29 10 Z
+              M 28 15
+              C 25 16, 23 19, 22 23
+              C 20 22, 17 23, 16 26
+              C 16 30, 19 32, 22 31
+              L 23 35
+              C 20 37, 16 39, 13 43
+              C 10 46, 9 51, 10 56
+              C 11 58, 14 58, 15 55
+              C 17 49, 21 46, 26 43
+              L 25 57
+              C 25 60, 28 61, 30 58
+              L 32 46
+              C 36 45, 41 41, 44 36
+              L 50 37
+              C 53 38, 55 35, 54 32
+              L 52 28
+              C 55 26, 56 22, 54 18
+              C 52 15, 48 15, 45 17
+              L 43 21
+              C 40 20, 37 21, 34 23
+              L 34 18
+              C 34 16, 31 15, 28 15 Z
+              M 39 12
+              L 49 4
+              C 50 3, 52 4, 51 6
+              L 42 14 Z
+            "/>
+          </svg>
+        </div>
+        <span class="dir-title">TENEX ➔ CUAUTLA</span>
         <span class="dir-sub">De Conasupo al Mercado</span>
       </button>
     </div>
@@ -102,14 +295,111 @@
 
   <!-- Tarjeta Hero de Próxima Llegada -->
   <section class="card hero">
-    <div><span id="hero-dir" class="hero-dir">CUAUTLA ➔ TENEX</span></div>
+    <div>
+      <span id="hero-dir" class="hero-dir">
+        <span id="hero-dir-icon"></span>
+        <span id="hero-dir-text">CUAUTLA ➔ TENEX</span>
+      </span>
+    </div>
+
+    <!-- Gráfico Vectorial Toyota Hiace Toldo Alto basado en la foto real -->
+    <svg class="hiace-hero-img" viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width:170px;height:auto">
+      <defs>
+        <linearGradient id="heroRoofGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="60%" stop-color="#f8fafc"/>
+          <stop offset="100%" stop-color="#e2e8f0"/>
+        </linearGradient>
+        <linearGradient id="heroChrome" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="50%" stop-color="#cbd5e1"/>
+          <stop offset="100%" stop-color="#94a3b8"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Sombra debajo de la combi en el piso -->
+      <ellipse cx="190" cy="182" rx="155" ry="14" fill="#012a42" opacity="0.45"/>
+
+      <!-- Ruedas (rines con orificios circulares) -->
+      <g>
+        <circle cx="295" cy="158" r="23" fill="#0f172a"/>
+        <circle cx="295" cy="158" r="16" fill="#cbd5e1"/>
+        <circle cx="295" cy="158" r="13" fill="#94a3b8"/>
+        <circle cx="295" cy="158" r="5" fill="#f8fafc"/>
+      </g>
+      <g>
+        <circle cx="125" cy="160" r="24" fill="#0f172a"/>
+        <circle cx="125" cy="160" r="17" fill="#cbd5e1"/>
+        <circle cx="125" cy="160" r="14" fill="#94a3b8"/>
+        <circle cx="125" cy="160" r="5" fill="#f8fafc"/>
+      </g>
+
+      <!-- Carrocería Lateral Blanca (Toldo Alto de la foto) -->
+      <path d="M 142 22 C 175 19, 290 24, 320 28 C 326 29, 331 34, 332 42 L 338 145 C 338 152, 332 158, 322 160 L 316 160 C 314 144, 276 144, 274 160 L 150 160 C 148 144, 100 144, 98 160 L 82 160 L 76 135 L 142 22 Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+
+      <!-- Toldo Alto (Curvatura frontal aerodinámica) -->
+      <path d="M 142 22 C 122 24, 102 34, 92 48 C 86 56, 83 66, 82 74 L 138 68 L 320 60 C 320 50, 315 36, 302 30 C 282 24, 175 19, 142 22 Z" fill="url(#heroRoofGrad)" stroke="#cbd5e1" stroke-width="1.2"/>
+
+      <!-- Frente de la Hiace (3/4 Ángulo) -->
+      <path d="M 138 68 L 82 74 C 77 78, 71 88, 68 98 L 57 140 C 55 152, 59 160, 70 163 L 86 164 L 136 160 L 138 68 Z" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+
+      <!-- Parabrisas con tinte oscuro y visera -->
+      <path d="M 134 72 L 86 78 C 82 83, 79 90, 76 99 L 71 118 L 130 112 L 134 72 Z" fill="#0f172a"/>
+      <path d="M 128 76 L 89 81 C 86 85, 84 90, 82 96 L 78 111 L 96 109 L 128 76 Z" fill="#38bdf8" opacity="0.35"/>
+
+      <!-- Ventanas Panorámicas Oscuras Continuas -->
+      <path d="M 144 68 L 318 60 C 324 60, 329 65, 330 72 L 332 110 L 144 115 Z" fill="#0f172a"/>
+      <line x1="148" y1="77" x2="324" y2="70" stroke="#67e8f9" stroke-width="2" opacity="0.45"/>
+      <rect x="220" y="78" width="34" height="24" rx="3" fill="none" stroke="#334155" stroke-width="1.5"/>
+      <rect x="272" y="77" width="34" height="24" rx="3" fill="none" stroke="#334155" stroke-width="1.5"/>
+
+      <!-- Ventana conductor -->
+      <path d="M 138 73 L 142 115 L 94 117 L 91 92 C 92 84, 95 78, 102 75 Z" fill="#1e293b"/>
+
+      <!-- FRANJAS: COSTADO HORIZONTALES -->
+      <!-- Franja Azul Horizontal -->
+      <path d="M 142 122 L 333 117 L 334 132 L 142 136 Z" fill="#0284c7"/>
+      <!-- Pequeña Franja Verde Horizontal -->
+      <path d="M 142 138 L 334 133 L 335 141 L 142 145 Z" fill="#16a34a"/>
+
+      <!-- FRANJAS: FRENTE VERTICALES -->
+      <!-- Franja Azul Vertical -->
+      <path d="M 103 114 L 117 112 L 114 158 L 100 160 Z" fill="#0284c7"/>
+      <!-- Pequeña Franja Verde Vertical -->
+      <path d="M 119 112 L 125 111 L 122 157 L 116 158 Z" fill="#16a34a"/>
+
+      <!-- Faros Grandes de la Hiace -->
+      <path d="M 65 124 L 81 121 L 78 144 L 60 142 C 60 134, 62 128, 65 124 Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+      <path d="M 66 127 L 77 124 L 75 141 L 63 139 Z" fill="#fef08a" opacity="0.85"/>
+      <path d="M 60 134 L 65 126 L 63 142 Z" fill="#f59e0b"/>
+
+      <!-- Parrilla Cromada con emblema Toyota -->
+      <path d="M 81 124 L 132 118 L 131 133 L 80 138 Z" fill="url(#heroChrome)" stroke="#94a3b8" stroke-width="0.8"/>
+      <path d="M 78 139 L 130 134 L 129 146 L 76 150 Z" fill="url(#heroChrome)" stroke="#94a3b8" stroke-width="0.8"/>
+      <ellipse cx="105" cy="128" rx="7" ry="5" fill="#ffffff" stroke="#475569" stroke-width="1"/>
+
+      <!-- Bumper / Fascia con toma de aire lateral -->
+      <path d="M 58 142 L 131 138 L 130 160 L 72 163 C 63 160, 58 152, 58 142 Z" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+      <rect x="63" y="146" width="9" height="13" rx="3" fill="#334155"/>
+      <rect x="86" y="149" width="26" height="11" rx="2" fill="#e2e8f0" stroke="#94a3b8" stroke-width="0.8"/>
+
+      <!-- Espejo lateral negro y manijas cromadas -->
+      <path d="M 77 101 L 67 102 C 64 102, 62 105, 63 109 L 65 118 L 76 116 Z" fill="#1e293b"/>
+      <rect x="152" y="119" width="12" height="4" rx="1.5" fill="url(#heroChrome)"/>
+      <rect x="222" y="119" width="12" height="4" rx="1.5" fill="url(#heroChrome)"/>
+
+      <!-- Calcomanía '19' en el lateral -->
+      <rect x="250" y="122" width="24" height="15" rx="4" fill="#ffffff" stroke="#0284c7" stroke-width="1.5"/>
+      <text x="262" y="133" font-family="sans-serif" font-size="10" font-weight="900" fill="#0284c7" text-anchor="middle">19</text>
+    </svg>
+
     <div class="muted">Próxima combi en: <b id="current-stop-name" style="color:#fff">—</b></div>
     <div id="unit" class="unit">—</div>
     <div><span id="unit-badge" class="hero-badge">—</span></div>
     <div id="next" class="time">—</div>
     <p id="left" class="muted">Calculando…</p>
-    <div class="sign-notice">🏷️ En la combi verás letrero: <b>Tenex Circuito</b></div>
-    <button id="refresh" style="margin-top:14px">Actualizar</button>
+    <div class="sign-notice">🏷️ Letrero en combi: <b>Circuito Tenex-Heredia</b></div>
+    <button id="refresh" style="margin-top:14px;background:#ffffff;color:#0284c7">Actualizar</button>
   </section>
 
   <!-- Resumen Siguiente y Hora Actual -->
@@ -159,9 +449,9 @@
       <p style="margin-top:12px">
         <label for="subroute-seen">¿Qué unidad pasó?</label>
         <select id="subroute-seen">
-          <option value="Tenex Circuito">Tenex Circuito (Unidad habitual)</option>
+          <option value="Circuito Tenex-Heredia">Circuito Tenex-Heredia (Unidad habitual)</option>
           <option value="Valle de Morelos">Valle de Morelos (Unidad de apoyo)</option>
-          <option value="No sé (Traía letrero Tenex)">No sé (Solo vi letrero Tenex Circuito)</option>
+          <option value="No sé (Traía letrero Tenex-Heredia)">No sé (Solo vi letrero Tenex-Heredia)</option>
         </select>
       </p>
       <p>
@@ -186,20 +476,25 @@
     </details>
   </section>
 
-  <div class="notice" style="background:#f1f5f9;color:#334155">
-    <b>Modelo de cálculo:</b> Anclaje con referencia U1 de Tenex en Mercado a las 12:12 p. m. Frecuencia de <b>8 minutos</b> con 12 unidades intercaladas en ciclo de 96 minutos. Sentido CUAUTLA-TENEX (Mercado a C. de Salud) y sentido TENEX-CUAUTLA (Conasupo al Mercado). Horarios estimados no oficiales.
+  <div class="notice" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd">
+    <b>Modelo de cálculo:</b> Anclaje con referencia U1 en Mercado a las 12:12 p. m. Frecuencia de <b>8 minutos</b> con 12 unidades intercaladas en ciclo de 96 minutos. Sentido CUAUTLA-TENEX (Mercado a C. de Salud) y sentido TENEX-CUAUTLA (Conasupo al Mercado). Horarios estimados no oficiales.
   </div>
 
-  <div class="foot">Ruta 19 · Subruta Tenex Circuito · Versión beta</div>
+  <div class="foot">Ruta 19 · Subruta Circuito Tenex-Heredia · Versión beta</div>
 </main>
 
 <script>
+// Siluetas SVG oficiales
+const ICON_MORELOS = `<svg viewBox="0 0 64 64" fill="currentColor"><path d="M 32 6 C 22 6, 15 12, 14 20 C 13 23, 11 27, 9 32 C 8 36, 9 40, 12 42 C 10 45, 8 50, 6 56 C 5 59, 8 60, 12 58 C 16 56, 19 50, 21 46 L 21 58 C 21 61, 23 62, 27 62 L 48 62 C 52 62, 54 58, 52 54 C 50 49, 45 44, 42 42 C 43 40, 45 38, 44 36 C 42 35, 40 35, 39 36 C 38 36, 38 34, 39 33 C 41 32, 43 32, 42 30 C 41 29, 39 29, 38 30 C 38 29, 40 28, 43 27 C 45 26, 46 24, 44 23 C 41 22, 39 23, 37 24 C 36 21, 35 18, 35 16 C 40 17, 44 15, 45 13 C 43 9, 38 6, 32 6 Z M 20 22 C 22 16, 28 13, 34 14 C 32 17, 27 19, 20 22 Z"/></svg>`;
+const ICON_SANTIAGO = `<svg viewBox="0 0 64 64" fill="currentColor"><path d="M 33 4 C 31 4, 30 6, 31 8 C 31 10, 33 11, 35 10 L 44 5 L 43 4 L 36 7 C 35 5, 34 4, 33 4 Z M 29 10 C 27 10, 25 12, 26 14 C 27 16, 29 16, 30 14 C 31 12, 30 10, 29 10 Z M 28 15 C 25 16, 23 19, 22 23 C 20 22, 17 23, 16 26 C 16 30, 19 32, 22 31 L 23 35 C 20 37, 16 39, 13 43 C 10 46, 9 51, 10 56 C 11 58, 14 58, 15 55 C 17 49, 21 46, 26 43 L 25 57 C 25 60, 28 61, 30 58 L 32 46 C 36 45, 41 41, 44 36 L 50 37 C 53 38, 55 35, 54 32 L 52 28 C 55 26, 56 22, 54 18 C 52 15, 48 15, 45 17 L 43 21 C 40 20, 37 21, 34 23 L 34 18 C 34 16, 31 15, 28 15 Z M 39 12 L 49 4 C 50 3, 52 4, 51 6 L 42 14 Z"/></svg>`;
+
 // Definición de sentidos y paradas con desfase en minutos desde la salida del Mercado (Base)
 const routes = [
   {
     id: "cuautla-tenex",
     name: "CUAUTLA ➔ TENEX",
     shortName: "Cuautla - Tenex",
+    icon: ICON_MORELOS,
     description: "Salida del Mercado (Base de combis) al Centro de Salud",
     stops: [
       { name: "Mercado (Base)", off: 0 },
@@ -217,6 +512,7 @@ const routes = [
     id: "tenex-cuautla",
     name: "TENEX ➔ CUAUTLA",
     shortName: "Tenex - Cuautla",
+    icon: ICON_SANTIAGO,
     description: "Salida de CONASUPO de regreso al Mercado",
     stops: [
       { name: "CONASUPO", off: 50 },
@@ -233,7 +529,7 @@ const routes = [
 // Configuración matemática de la rotación:
 // Referencia base: Tenex U1 sale de Mercado a las 12:12 p. m. (minuto 732 del día)
 // Frecuencia: 8 min
-// 12 unidades en el ciclo de 96 min (6 Tenex + 6 Valle de Morelos)
+// 12 unidades en el ciclo de 96 min (6 Tenex-Heredia + 6 Valle de Morelos)
 const ref = 12 * 60 + 12;
 const spacing = 8;
 const cycleSlots = 12;
@@ -248,7 +544,9 @@ function renderStopsForCurrentDir() {
   let r = routes[curDir];
   $("btn-dir-0").className = "dir-btn" + (curDir === 0 ? " active" : "");
   $("btn-dir-1").className = "dir-btn" + (curDir === 1 ? " active" : "");
-  $("hero-dir").textContent = r.name;
+  
+  $("hero-dir-text").textContent = r.name;
+  $("hero-dir-icon").innerHTML = r.icon;
   $("stops-title").textContent = "Paradas de " + r.shortName;
 
   sel.innerHTML = "";
@@ -307,18 +605,18 @@ function nowM() {
 }
 
 function getUnitInfo(slotIndex) {
-  // Slots pares (0, 2, 4, 6, 8, 10) -> Tenex Circuito (U1 a U6)
+  // Slots pares (0, 2, 4, 6, 8, 10) -> Circuito Tenex-Heredia (U1 a U6)
   // Slots impares (1, 3, 5, 7, 9, 11) -> Valle de Morelos (V1 a V6)
   if (slotIndex % 2 === 0) {
     let num = (slotIndex / 2) + 1;
     return {
       code: "U" + num,
-      subroute: "Tenex Circuito",
-      shortSubroute: "Tenex",
+      subroute: "Circuito Tenex-Heredia",
+      shortSubroute: "Tenex-Heredia",
       isValle: false,
       tagClass: "tag-tenex",
       badgeClass: "tenex",
-      desc: "Unidad habitual de Tenex"
+      desc: "Unidad habitual de Circuito Tenex-Heredia"
     };
   } else {
     let num = Math.floor(slotIndex / 2) + 1;
@@ -382,7 +680,7 @@ function renderHistory() {
     ? r.map(x => {
         let tagClass = (x.subroute && x.subroute.includes("Valle")) ? "tag-valle" : "tag-tenex";
         return `<div class="report">
-          <b>${safe(x.stop)}</b> · <span class="tag ${tagClass}">${safe(x.subroute || "Tenex")}</span> · <b>${safe(x.time)}</b><br>
+          <b>${safe(x.stop)}</b> · <span class="tag ${tagClass}">${safe(x.subroute || "Tenex-Heredia")}</span> · <b>${safe(x.time)}</b><br>
           ${safe(x.note || "Sin comentario adicional")}<br>
           <span class="muted" style="font-size:11px">${safe(x.at)}</span>
         </div>`;

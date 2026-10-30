@@ -1,4 +1,4 @@
-RUTA 19 — CHECADOR BETA (CIRCUITO TENEX & VALLE DE MORELOS)
+RUTA 19 — CHECADOR BETA (CIRCUITO TENEX-HEREDIA & VALLE DE MORELOS)
 Incluye index.html, manifest.webmanifest, sw.js e icon.svg.
 
 DIVISIÓN DE SENTIDOS:
@@ -24,7 +24,7 @@ DIVISIÓN DE SENTIDOS:
 
 FRECUENCIA E INTERCALADO (CONTINGENCIA POR OBRAS EN VALLE DE MORELOS):
 - Subruta Valle de Morelos temporalmente suspendida por obras viales.
-- Todas sus unidades pasaron a Tenex Circuito, portando el letrero "Tenex Circuito".
+- Todas sus unidades pasaron a la subruta Circuito Tenex-Heredia, portando el letrero físico de la ruta.
 - Frecuencia: cada 8 minutos.
-- Total unidades en ciclo de 96 min: 12 unidades (6 de Tenex Circuito U1..U6 y 6 de Valle de Morelos V1..V6).
+- Total unidades en ciclo de 96 min: 12 unidades (6 de Circuito Tenex-Heredia U1..U6 y 6 de Valle de Morelos V1..V6).
 - Referencia anclada: U1 en Mercado a las 12:12 p. m.
