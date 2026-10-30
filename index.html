@@ -12,16 +12,25 @@
     body { margin: 0; background: #eef3f7; color: #172b3d; font: 16px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     main { max-width: 680px; margin: auto; padding: 15px; }
     .card { background: #fff; border-radius: 17px; padding: 17px; margin: 0 0 13px; box-shadow: 0 3px 14px rgba(18, 49, 70, 0.07); }
-    h1 { font-size: 22px; margin: 0; }
+    h1 { font-size: 21px; margin: 0; }
     .muted { color: #637589; }
     .beta { background: #fff0c2; color: #805600; border-radius: 20px; padding: 5px 9px; font-size: 11px; font-weight: bold; white-space: nowrap; }
     .head { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
     label { display: block; font-weight: bold; margin-bottom: 8px; }
     select, input, button { font: inherit; padding: 12px; border-radius: 10px; border: 1px solid #cbd5e1; width: 100%; }
-    button { background: #10243a; color: white; border: 0; font-weight: bold; cursor: pointer; transition: opacity .15s; }
-    button:hover { opacity: 0.92; }
-    .hero { text-align: center; background: #10243a; color: white; padding: 22px; }
+    button { background: #10243a; color: white; border: 0; font-weight: bold; cursor: pointer; transition: all .15s ease; }
+    button:hover { opacity: 0.93; }
+
+    /* Selector de sentido / dirección */
+    .dir-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+    .dir-btn { background: #f1f5f9; color: #334155; border: 2px solid #e2e8f0; padding: 10px 8px; border-radius: 12px; text-align: center; cursor: pointer; }
+    .dir-btn .dir-title { display: block; font-size: 13px; font-weight: 800; }
+    .dir-btn .dir-sub { display: block; font-size: 11px; opacity: 0.8; margin-top: 2px; }
+    .dir-btn.active { background: #10243a; color: #fff; border-color: #10243a; box-shadow: 0 4px 10px rgba(16, 36, 58, 0.25); }
+
+    .hero { text-align: center; background: #10243a; color: white; padding: 22px; position: relative; }
     .hero .muted { color: #d1deea; }
+    .hero-dir { display: inline-block; background: rgba(255, 255, 255, 0.15); padding: 4px 11px; border-radius: 14px; font-size: 12px; font-weight: bold; margin-bottom: 6px; }
     .unit { font-size: 52px; font-weight: 850; margin: 4px 0; }
     .time { font-size: 28px; font-weight: 750; margin-top: 4px; }
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
@@ -31,7 +40,8 @@
     td, th { text-align: left; padding: 9px 5px; border-bottom: 1px solid #e1e8ee; }
     th { font-size: 12px; color: #637589; }
     .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-    .chip { width: auto; background: #e7eef4; color: #183c59; padding: 7px 10px; font-size: 13px; border-radius: 8px; }
+    .chip { width: auto; background: #e7eef4; color: #183c59; padding: 7px 11px; font-size: 13px; border-radius: 8px; }
+    .chip.active { background: #10243a; color: #fff; font-weight: bold; }
     details { margin-top: 12px; border-top: 1px solid #e1e8ee; padding-top: 12px; }
     summary { font-weight: bold; cursor: pointer; }
     .row { display: flex; gap: 8px; }
@@ -41,7 +51,7 @@
     .alert-works { background: #fff7ed; border-left: 4px solid #ea580c; color: #7c2d12; }
     .foot { text-align: center; font-size: 12px; color: #637589; padding: 10px; }
     
-    /* Etiquetas y diferenciación visual */
+    /* Etiquetas visuales */
     .tag { display: inline-block; padding: 2px 7px; border-radius: 10px; font-size: 11px; font-weight: 700; white-space: nowrap; vertical-align: middle; }
     .tag-tenex { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
     .tag-valle { background: #ffedd5; color: #c2410c; border: 1px solid #fed7aa; }
@@ -58,7 +68,7 @@
   <header class="card head">
     <div>
       <h1>🚐 Ruta 19 · Circuito Tenex</h1>
-      <span class="muted">Checador de horarios · Frecuencia: cada 8 min</span>
+      <span class="muted">Checador de horarios · Pasa cada 8 min</span>
     </div>
     <span class="beta">BETA · EN PRUEBA</span>
   </header>
@@ -66,19 +76,34 @@
   <!-- Aviso de reasignación temporal de unidades -->
   <div class="notice alert-works">
     <b>🚧 Aviso por obras en Valle de Morelos:</b><br>
-    Debido al arreglo de la avenida principal en Valle de Morelos, esa subruta está <b>suspendida temporalmente</b> y todas sus unidades fueron integradas a <b>Tenex Circuito</b>.<br>
-    Las combis pasan ahora cada <b>8 minutos</b> (intercaladas: 1 Tenex y 1 Valle).<br>
-    <i>Nota:</i> Todas las unidades circulan con el letrero físico <b>"Tenex Circuito"</b>, pero aquí te marcamos cuáles corresponden originalmente a Valle de Morelos.
+    La subruta Valle de Morelos está suspendida temporalmente por obras en su avenida principal. Sus unidades fueron transferidas a <b>Tenex Circuito</b>.<br>
+    Las combis pasan cada <b>8 minutos</b> (intercaladas: 1 Tenex y 1 Valle).<br>
+    <i>Nota:</i> Todas llevan el letrero físico <b>"Tenex Circuito"</b>; aquí te indicamos cuáles serian de Valle de Morelos.
   </div>
 
+  <!-- Selector de Sentido de la Ruta -->
   <section class="card">
-    <label for="stop">¿Dónde esperas la combi?</label>
+    <label>Selecciona el sentido de tu viaje:</label>
+    <div class="dir-grid">
+      <button type="button" class="dir-btn active" id="btn-dir-0" onclick="switchDir(0)">
+        <span class="dir-title">🏙️ ➔ 🌄 CUAUTLA - TENEX</span>
+        <span class="dir-sub">Del Mercado al C. de Salud</span>
+      </button>
+      <button type="button" class="dir-btn" id="btn-dir-1" onclick="switchDir(1)">
+        <span class="dir-title">🌄 ➔ 🏙️ TENEX - CUAUTLA</span>
+        <span class="dir-sub">De Conasupo al Mercado</span>
+      </button>
+    </div>
+
+    <label for="stop">¿En qué parada estás?</label>
     <select id="stop"></select>
-    <p class="muted" style="font-size:12px;margin:8px 0 0 0">Tu parada favorita se guarda en este teléfono.</p>
+    <p class="muted" style="font-size:12px;margin:8px 0 0 0">Tu parada y sentido se guardan en este teléfono.</p>
   </section>
 
+  <!-- Tarjeta Hero de Próxima Llegada -->
   <section class="card hero">
-    <div class="muted">Próxima unidad estimada</div>
+    <div><span id="hero-dir" class="hero-dir">CUAUTLA ➔ TENEX</span></div>
+    <div class="muted">Próxima combi en: <b id="current-stop-name" style="color:#fff">—</b></div>
     <div id="unit" class="unit">—</div>
     <div><span id="unit-badge" class="hero-badge">—</span></div>
     <div id="next" class="time">—</div>
@@ -87,6 +112,7 @@
     <button id="refresh" style="margin-top:14px">Actualizar</button>
   </section>
 
+  <!-- Resumen Siguiente y Hora Actual -->
   <section class="card grid">
     <div class="small">
       <span class="muted">Después pasa</span>
@@ -101,8 +127,9 @@
     </div>
   </section>
 
+  <!-- Próximas Combis -->
   <section class="card">
-    <b>Próximas 8 combis estimadas</b>
+    <b id="table-title">Próximas 8 combis estimadas</b>
     <p class="muted" style="font-size:12px;margin:3px 0 10px 0">Intercaladas cada 8 minutos entre ambas subrutas:</p>
     <table>
       <thead>
@@ -116,11 +143,13 @@
     </table>
   </section>
 
+  <!-- Paradas del sentido seleccionado -->
   <section class="card">
-    <b>Paradas del recorrido</b>
+    <b id="stops-title">Paradas de este sentido</b>
     <div id="chips" class="chips" style="margin-top:12px"></div>
   </section>
 
+  <!-- Reportes Ciudadanos -->
   <section class="card">
     <b>Ayúdanos a comprobar los horarios</b>
     <p class="muted" style="font-size:13px">Registra la hora real cuando pase una combi para ajustar el cálculo.</p>
@@ -158,53 +187,97 @@
   </section>
 
   <div class="notice" style="background:#f1f5f9;color:#334155">
-    <b>Modelo de cálculo temporal:</b> Anclaje con referencia conocida U1 de Tenex en Mercado a las 12:12 p. m. Frecuencia ajustada a <b>8 minutos</b> integrando 12 unidades en el ciclo de 96 minutos (6 habituales de Tenex y 6 de apoyo procedentes de Valle de Morelos). Horarios estimados no oficiales.
+    <b>Modelo de cálculo:</b> Anclaje con referencia U1 de Tenex en Mercado a las 12:12 p. m. Frecuencia de <b>8 minutos</b> con 12 unidades intercaladas en ciclo de 96 minutos. Sentido CUAUTLA-TENEX (Mercado a C. de Salud) y sentido TENEX-CUAUTLA (Conasupo al Mercado). Horarios estimados no oficiales.
   </div>
 
   <div class="foot">Ruta 19 · Subruta Tenex Circuito · Versión beta</div>
 </main>
 
 <script>
-// Paradas del circuito con desfase en minutos desde Mercado
-const stops = [
-  ["Mercado", 0],
-  ["Biblioteca", 5],
-  ["Base Sr. P.", 10],
-  ["Arco (ida)", 18],
-  ["Gas Villa (ida)", 27],
-  ["Cancha OL (ida)", 31],
-  ["Herrería (ida)", 36],
-  ["Z. Tenex", 43],
-  ["C. de Salud", 45],
-  ["Conasupo", 50],
-  ["C. Constancio Farfán", 53],
-  ["Herrería (regreso)", 61],
-  ["Cancha (regreso)", 66],
-  ["Gas Villa (regreso)", 70],
-  ["Arco (regreso)", 79]
+// Definición de sentidos y paradas con desfase en minutos desde la salida del Mercado (Base)
+const routes = [
+  {
+    id: "cuautla-tenex",
+    name: "CUAUTLA ➔ TENEX",
+    shortName: "Cuautla - Tenex",
+    description: "Salida del Mercado (Base de combis) al Centro de Salud",
+    stops: [
+      { name: "Mercado (Base)", off: 0 },
+      { name: "Biblioteca", off: 5 },
+      { name: "Base Sr. P.", off: 10 },
+      { name: "Arco ICATMOR", off: 18 },
+      { name: "Gas Villa", off: 27 },
+      { name: "Cancha Olintepec", off: 31 },
+      { name: "Herrería Abelardo", off: 36 },
+      { name: "Zócalo de Tenex", off: 43 },
+      { name: "C. de Salud (Centro de Salud)", off: 45 }
+    ]
+  },
+  {
+    id: "tenex-cuautla",
+    name: "TENEX ➔ CUAUTLA",
+    shortName: "Tenex - Cuautla",
+    description: "Salida de CONASUPO de regreso al Mercado",
+    stops: [
+      { name: "CONASUPO", off: 50 },
+      { name: "Construrama-Tenex", off: 53 },
+      { name: "Herrería Abelardo", off: 61 },
+      { name: "Cancha Olintepec", off: 66 },
+      { name: "Gas Villa", off: 70 },
+      { name: "Arco ICATMOR", off: 79 },
+      { name: "Mercado (Llegada Base)", off: 96 }
+    ]
+  }
 ];
 
-// Configuración de la frecuencia e intercalado:
-// - Referencia base: Tenex U1 en Mercado a las 12:12 (732 min)
-// - Frecuencia actual: cada 8 minutos
-// - Total unidades en rotación: 12 (6 Tenex + 6 Valle de Morelos)
-// - Ciclo completo: 96 minutos (12 * 8 = 96 min)
-const ref = 12 * 60 + 12; 
+// Configuración matemática de la rotación:
+// Referencia base: Tenex U1 sale de Mercado a las 12:12 p. m. (minuto 732 del día)
+// Frecuencia: 8 min
+// 12 unidades en el ciclo de 96 min (6 Tenex + 6 Valle de Morelos)
+const ref = 12 * 60 + 12;
 const spacing = 8;
 const cycleSlots = 12;
+
+let curDir = parseInt(localStorage.getItem("tenexDir") || "0", 10);
+if (curDir !== 0 && curDir !== 1) curDir = 0;
 
 const $ = id => document.getElementById(id);
 const sel = $("stop");
 
-stops.forEach((s, i) => {
-  let o = document.createElement("option");
-  o.value = i;
-  o.textContent = s[0];
-  sel.append(o);
-});
-sel.value = localStorage.getItem("tenexStop") || "0";
+function renderStopsForCurrentDir() {
+  let r = routes[curDir];
+  $("btn-dir-0").className = "dir-btn" + (curDir === 0 ? " active" : "");
+  $("btn-dir-1").className = "dir-btn" + (curDir === 1 ? " active" : "");
+  $("hero-dir").textContent = r.name;
+  $("stops-title").textContent = "Paradas de " + r.shortName;
 
-$("chips").innerHTML = stops.map((s, i) => `<button class="chip" data-i="${i}">${s[0]}</button>`).join("");
+  sel.innerHTML = "";
+  r.stops.forEach((s, i) => {
+    let o = document.createElement("option");
+    o.value = i;
+    o.textContent = s.name;
+    sel.append(o);
+  });
+
+  let savedStop = localStorage.getItem("tenexStopIdx_" + curDir);
+  if (savedStop !== null && +savedStop < r.stops.length) {
+    sel.value = savedStop;
+  } else {
+    sel.value = "0";
+  }
+
+  renderChips();
+  update();
+}
+
+function renderChips() {
+  let r = routes[curDir];
+  let curStopIdx = +sel.value;
+  $("chips").innerHTML = r.stops.map((s, i) =>
+    `<button class="chip ${i === curStopIdx ? 'active' : ''}" data-i="${i}">${s.name}</button>`
+  ).join("");
+}
+
 $("chips").onclick = e => {
   let b = e.target.closest("[data-i]");
   if (b) {
@@ -212,6 +285,12 @@ $("chips").onclick = e => {
     setStop();
   }
 };
+
+function switchDir(dirIdx) {
+  curDir = dirIdx;
+  localStorage.setItem("tenexDir", curDir);
+  renderStopsForCurrentDir();
+}
 
 function mod(a, b) {
   return (a % b + b) % b;
@@ -227,7 +306,6 @@ function nowM() {
   return d.getHours() * 60 + d.getMinutes() + d.getSeconds() / 60;
 }
 
-// Determina el tipo y número de unidad según el slot en el ciclo (0 a 11)
 function getUnitInfo(slotIndex) {
   // Slots pares (0, 2, 4, 6, 8, 10) -> Tenex Circuito (U1 a U6)
   // Slots impares (1, 3, 5, 7, 9, 11) -> Valle de Morelos (V1 a V6)
@@ -258,7 +336,9 @@ function getUnitInfo(slotIndex) {
 
 function calc(count = 8) {
   let now = nowM();
-  let off = stops[+sel.value][1];
+  let r = routes[curDir];
+  let stopIdx = +sel.value;
+  let off = r.stops[stopIdx] ? r.stops[stopIdx].off : 0;
   let n = Math.floor((now - (ref + off)) / spacing) - 1;
   let out = [];
 
@@ -312,11 +392,15 @@ function renderHistory() {
 
 function update() {
   let d = new Date();
+  let r = routes[curDir];
+  let stopIdx = +sel.value;
+  let currentStop = r.stops[stopIdx] || r.stops[0];
   let a = calc(8);
   let x = a[0];
 
   $("now").textContent = d.toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" });
   $("date").textContent = d.toLocaleDateString("es-MX", { weekday: "short", day: "numeric", month: "short" });
+  $("current-stop-name").textContent = currentStop.name;
 
   if (!x) return;
 
@@ -360,7 +444,8 @@ function update() {
 }
 
 function setStop() {
-  localStorage.setItem("tenexStop", sel.value);
+  localStorage.setItem("tenexStopIdx_" + curDir, sel.value);
+  renderChips();
   update();
 }
 
@@ -372,15 +457,17 @@ $("save").onclick = () => {
     alert("Por favor indica la hora real de paso.");
     return;
   }
-  let r = reports();
-  r.unshift({
-    stop: stops[+sel.value][0],
+  let r = routes[curDir];
+  let currentStop = r.stops[+sel.value] || r.stops[0];
+  let rep = reports();
+  rep.unshift({
+    stop: `${currentStop.name} [${r.shortName}]`,
     subroute: $("subroute-seen").value,
     time: $("real").value,
     note: $("note").value.trim(),
     at: new Date().toLocaleString("es-MX")
   });
-  localStorage.setItem("tenexReports", JSON.stringify(r));
+  localStorage.setItem("tenexReports", JSON.stringify(rep));
   $("real").value = "";
   $("note").value = "";
   renderHistory();
@@ -404,8 +491,8 @@ $("export").onclick = () => {
   URL.revokeObjectURL(u);
 };
 
-// Inicialización y auto-recarga
-update();
+// Inicialización de la vista
+renderStopsForCurrentDir();
 setInterval(update, 15000);
 
 if ("serviceWorker" in navigator) {

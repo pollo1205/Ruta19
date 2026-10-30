@@ -1,24 +1,30 @@
 RUTA 19 — CHECADOR BETA (CIRCUITO TENEX & VALLE DE MORELOS)
 Incluye index.html, manifest.webmanifest, sw.js e icon.svg.
 
-CONTEXTO OPERATIVO TEMPORAL:
-Por trabajos de remodelación/pavimentación en la avenida principal de la colonia Valle de Morelos, dicha subruta se encuentra suspendida temporalmente. Todas sus unidades fueron reasignadas a cubrir la subruta Circuito Tenex.
-- Todas las unidades físicas circulan con el letrero: "Tenex Circuito".
-- En la aplicación se distinguen cuáles corresponden habitualmente a Tenex Circuito (U1 a U6) y cuáles vienen en apoyo desde Valle de Morelos (V1 a V6).
+DIVISIÓN DE SENTIDOS:
+1. CUAUTLA ➔ TENEX (Salida de la base en Cuautla hacia Tenex):
+   - Mercado (Base) [0 min]
+   - Biblioteca [5 min]
+   - Base Sr. P. [10 min]
+   - Arco ICATMOR [18 min]
+   - Gas Villa [27 min]
+   - Cancha Olintepec [31 min]
+   - Herrería Abelardo [36 min]
+   - Zócalo de Tenex [43 min]
+   - C. de Salud (Centro de Salud) [45 min]
 
-CÁLCULO Y ROTACIÓN:
-- Intervalo anterior: 16 minutos (6 unidades).
-- Intervalo actual: 8 minutos (12 unidades intercaladas 1:1).
-- Secuencia: 1 Tenex, 1 Valle de Morelos, 1 Tenex, 1 Valle de Morelos...
-- Duración total del ciclo: 96 minutos (12 unidades * 8 min = 96 min).
-- Referencia anclada: Unidad U1 de Tenex en parada Mercado a las 12:12 p. m.
-  * 12:12 -> U1 (Tenex Circuito)
-  * 12:20 -> V1 (Valle de Morelos)
-  * 12:28 -> U2 (Tenex Circuito)
-  * 12:36 -> V2 (Valle de Morelos)
-  * ...
-  * 13:48 -> U1 (Tenex Circuito) de nuevo tras 96 min.
+2. TENEX ➔ CUAUTLA (Retorno hacia Cuautla):
+   - CONASUPO [50 min]
+   - Construrama-Tenex [53 min]
+   - Herrería Abelardo [61 min]
+   - Cancha Olintepec [66 min]
+   - Gas Villa [70 min]
+   - Arco ICATMOR [79 min]
+   - Mercado (Llegada Base) [96 min]
 
-NOTAS PARA PWA:
-Para instalar como PWA y utilizar el modo sin conexión, debe alojarse en un servicio con HTTPS (por ejemplo GitHub Pages, Netlify o Cloudflare Pages).
-Los reportes ciudadanos se guardan en el almacenamiento local del teléfono (localStorage) y pueden exportarse en JSON.
+FRECUENCIA E INTERCALADO (CONTINGENCIA POR OBRAS EN VALLE DE MORELOS):
+- Subruta Valle de Morelos temporalmente suspendida por obras viales.
+- Todas sus unidades pasaron a Tenex Circuito, portando el letrero "Tenex Circuito".
+- Frecuencia: cada 8 minutos.
+- Total unidades en ciclo de 96 min: 12 unidades (6 de Tenex Circuito U1..U6 y 6 de Valle de Morelos V1..V6).
+- Referencia anclada: U1 en Mercado a las 12:12 p. m.
