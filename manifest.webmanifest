@@ -1,15 +1,13 @@
 {
-  "id": "circuito-tenex-pwa",
-  "name": "Circuito Tenex",
-  "short_name": "Circuito Tenex",
-  "description": "Checador de combis en tiempo real estimado para la ruta Circuito Tenex y servicio reforzado en Tenextepango, Ayala, Morelos.",
+  "name": "Ruta 19 · Circuito Tenex & Valle de Morelos",
+  "short_name": "Ruta 19 Tenex",
+  "description": "Checador beta de horarios de la Ruta 19: Circuito Tenex con apoyo de unidades Valle de Morelos",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0f172a",
-  "theme_color": "#0f172a",
-  "lang": "es-MX",
+  "background_color": "#eef3f7",
+  "theme_color": "#10243a",
   "icons": [
     {
       "src": "./icon.svg",
@@ -17,10 +15,5 @@
       "type": "image/svg+xml",
       "purpose": "any maskable"
     }
-  ],
-  "categories": [
-    "travel",
-    "transportation",
-    "utilities"
   ]
 }
