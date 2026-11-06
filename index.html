@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0284c7">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icon.svg">
-  <title>Ruta 19 · Circuito Tenex-Heredia & Valle de Morelos</title>
+  <title>Ruta 19 · Circuito Tenex-Heredia</title>
   <style>
     * { box-sizing: border-box; }
     body { 
@@ -181,18 +181,10 @@
   <header class="card head">
     <div>
       <h1>🚐 Ruta 19 · Circuito Tenex-Heredia</h1>
-      <span class="muted">Checador de horarios · Pasa cada 8 min</span>
+      <span class="muted">Checador de horarios · Pasa cada 16 min</span>
     </div>
     <span class="beta">BETA · EN PRUEBA</span>
   </header>
-
-  <!-- Aviso de reasignación temporal de unidades -->
-  <div class="notice alert-works">
-    <b>🚧 Aviso por obras en Valle de Morelos:</b><br>
-    La subruta Valle de Morelos está suspendida temporalmente por obras en su avenida principal. Sus unidades fueron transferidas a <b>Circuito Tenex-Heredia</b>.<br>
-    Las combis pasan cada <b>8 minutos</b> (intercaladas: 1 Tenex-Heredia y 1 Valle).<br>
-    <i>Nota:</i> Todas llevan el letrero físico <b>"Tenex-Heredia Circuito"</b>; aquí te indicamos cuáles provienen de Valle de Morelos.
-  </div>
 
   <!-- Tarjeta Unificada: Selector + Hero de Próxima Llegada -->
   <section class="card hero">
@@ -422,12 +414,12 @@
 
   <!-- Próximas Combis -->
   <section class="card">
-    <b id="table-title">Próximas 8 combis estimadas</b>
-    <p class="muted" style="font-size:12px;margin:3px 0 10px 0">Intercaladas cada 8 minutos entre ambas subrutas:</p>
+    <b id="table-title">Próximas combis estimadas</b>
+    <p class="muted" style="font-size:12px;margin:3px 0 10px 0">Frecuencia habitual cada 16 minutos:</p>
     <table>
       <thead>
         <tr>
-          <th>Unidad / Subruta</th>
+          <th>Unidad</th>
           <th>Hora est.</th>
           <th>Faltan</th>
         </tr>
@@ -444,11 +436,9 @@
     <details>
       <summary>📝 Reportar hora real de paso</summary>
       <p style="margin-top:12px">
-        <label for="subroute-seen">¿Qué unidad pasó?</label>
+        <label for="subroute-seen">Unidad / Subruta</label>
         <select id="subroute-seen">
-          <option value="Circuito Tenex-Heredia">Circuito Tenex-Heredia (Unidad habitual)</option>
-          <option value="Valle de Morelos">Valle de Morelos (Unidad de apoyo)</option>
-          <option value="No sé (Traía letrero Tenex-Heredia)">No sé (Solo vi letrero Tenex-Heredia)</option>
+          <option value="Circuito Tenex-Heredia">Circuito Tenex-Heredia</option>
         </select>
       </p>
       <p>
@@ -474,7 +464,7 @@
   </section>
 
   <div class="notice" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd">
-    <b>Modelo de cálculo:</b> Anclaje con referencia U1 en Mercado a las 12:12 p. m. Frecuencia de <b>8 minutos</b> con 12 unidades intercaladas en ciclo de 96 minutos. Sentido CUAUTLA-TENEX (Mercado a C. de Salud) y sentido TENEX-CUAUTLA (Conasupo al Mercado). Horarios estimados no oficiales.
+    <b>Modelo de cálculo:</b> Anclaje con referencia U1 en Mercado a las 12:12 p. m. Frecuencia de <b>16 minutos</b> con 6 unidades (U1 a U6) en ciclo de 96 minutos. Sentido CUAUTLA-TENEX (Mercado a C. de Salud) y sentido TENEX-CUAUTLA (Conasupo al Mercado). Horarios estimados no oficiales.
   </div>
 
   <div class="foot">Ruta 19 · Subruta Circuito Tenex-Heredia · Versión beta</div>
@@ -525,11 +515,10 @@ const routes = [
 
 // Configuración matemática de la rotación:
 // Referencia base: Tenex U1 sale de Mercado a las 12:12 p. m. (minuto 732 del día)
-// Frecuencia: 8 min
-// 12 unidades en el ciclo de 96 min (6 Tenex-Heredia + 6 Valle de Morelos)
+// Frecuencia habitual: cada 16 min con 6 unidades en el ciclo de 96 min (U1 a U6)
 const ref = 12 * 60 + 12;
-const spacing = 8;
-const cycleSlots = 12;
+const spacing = 16;
+const cycleSlots = 6;
 
 let curDir = parseInt(localStorage.getItem("tenexDir") || "0", 10);
 if (curDir !== 0 && curDir !== 1) curDir = 0;
@@ -585,31 +574,17 @@ function nowM() {
 }
 
 function getUnitInfo(slotIndex) {
-  // Slots pares (0, 2, 4, 6, 8, 10) -> Circuito Tenex-Heredia (U1 a U6)
-  // Slots impares (1, 3, 5, 7, 9, 11) -> Valle de Morelos (V1 a V6)
-  if (slotIndex % 2 === 0) {
-    let num = (slotIndex / 2) + 1;
-    return {
-      code: "U" + num,
-      subroute: "Circuito Tenex-Heredia",
-      shortSubroute: "Tenex-Heredia",
-      isValle: false,
-      tagClass: "tag-tenex",
-      badgeClass: "tenex",
-      desc: "Unidad habitual de Circuito Tenex-Heredia"
-    };
-  } else {
-    let num = Math.floor(slotIndex / 2) + 1;
-    return {
-      code: "V" + num,
-      subroute: "Valle de Morelos",
-      shortSubroute: "Valle Mor.",
-      isValle: true,
-      tagClass: "tag-valle",
-      badgeClass: "valle",
-      desc: "Unidad reasignada de Valle de Morelos"
-    };
-  }
+  // 6 unidades de Circuito Tenex-Heredia (U1 a U6)
+  let num = slotIndex + 1;
+  return {
+    code: "U" + num,
+    subroute: "Circuito Tenex-Heredia",
+    shortSubroute: "Tenex-Heredia",
+    isValle: false,
+    tagClass: "tag-tenex",
+    badgeClass: "tenex",
+    desc: "Unidad habitual de Circuito Tenex-Heredia"
+  };
 }
 
 function calc(count = 8) {
@@ -685,7 +660,7 @@ function update() {
   // Próxima unidad destacada
   $("unit").textContent = x.code;
   let b = $("unit-badge");
-  b.textContent = x.subroute + (x.isValle ? " (Apoyo por obras)" : " (Habitual)");
+  b.textContent = x.subroute;
   b.className = "hero-badge " + x.badgeClass;
 
   $("next").textContent = clock(x.t);
@@ -763,7 +738,7 @@ $("export").onclick = () => {
   let u = URL.createObjectURL(blob);
   let link = document.createElement("a");
   link.href = u;
-  link.download = "reportes-ruta19-tenex-valle.json";
+  link.download = "reportes-ruta19-tenex.json";
   link.click();
   URL.revokeObjectURL(u);
 };

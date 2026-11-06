@@ -1,7 +1,7 @@
 {
-  "name": "Ruta 19 · Circuito Tenex-Heredia & Valle de Morelos",
+  "name": "Ruta 19 · Circuito Tenex-Heredia",
   "short_name": "Ruta 19 Tenex-Heredia",
-  "description": "Checador beta de horarios de la Ruta 19: Circuito Tenex-Heredia con apoyo de unidades Valle de Morelos",
+  "description": "Checador beta de horarios de la Ruta 19: Circuito Tenex-Heredia",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
