@@ -1,4 +1,4 @@
-const CACHE = 'circuito-tenex-beta-v16';
+const CACHE = 'circuito-tenex-beta-v18';
 const FILES = [
   './',
   './index.html',

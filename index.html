@@ -28,6 +28,64 @@
     h1 { font-size: 21px; margin: 0; color: #0369a1; }
     .muted { color: #64748b; }
     .beta { background: #fef3c7; color: #92400e; border-radius: 20px; padding: 5px 9px; font-size: 11px; font-weight: bold; white-space: nowrap; }
+    .btn-install {
+      background: #0284c7;
+      color: #ffffff;
+      border: 1px solid #38bdf8;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25);
+    }
+    .btn-install:hover { background: #0369a1; }
+    
+    /* Modal de ayuda de instalación */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 16px;
+    }
+    .modal-box {
+      background: #ffffff;
+      border-radius: 20px;
+      max-width: 420px;
+      width: 100%;
+      padding: 22px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    }
+    .modal-step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin: 12px 0;
+      font-size: 13.5px;
+      line-height: 1.4;
+    }
+    .step-num {
+      background: #0284c7;
+      color: #fff;
+      font-weight: 800;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 12px;
+    }
     .head { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
     label { display: block; font-weight: bold; margin-bottom: 8px; color: #0f172a; }
     select, input, button { font: inherit; padding: 12px; border-radius: 10px; border: 1px solid #bae6fd; width: 100%; }
@@ -183,7 +241,10 @@
       <h1>🚐 Ruta 19 · Circuito Tenex-Heredia</h1>
       <span class="muted">Checador de horarios · Pasa cada 16 min</span>
     </div>
-    <span class="beta">BETA · EN PRUEBA</span>
+    <div style="display:flex;align-items:center;gap:6px">
+      <button id="btn-install" class="btn-install" type="button">📥 Instalar</button>
+      <span class="beta">BETA</span>
+    </div>
   </header>
 
   <!-- Tarjeta Unificada: Selector + Hero de Próxima Llegada -->
@@ -467,8 +528,40 @@
     <b>Modelo de cálculo:</b> Anclaje con referencia U1 en Mercado a las 12:12 p. m. Frecuencia de <b>16 minutos</b> con 6 unidades (U1 a U6) en ciclo de 96 minutos. Sentido CUAUTLA-TENEX (Mercado a C. de Salud) y sentido TENEX-CUAUTLA (Conasupo al Mercado). Horarios estimados no oficiales.
   </div>
 
-  <div class="foot">Ruta 19 · Subruta Circuito Tenex-Heredia · Versión beta</div>
+  <div class="foot">
+    <div>Ruta 19 · Subruta Circuito Tenex-Heredia · Versión beta</div>
+    <div style="margin-top:10px;font-size:12px;color:#0369a1;background:#e0f2fe;display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:14px;border:1px solid #bae6fd">
+      <span>👥 <b>Usuarios que nos visitan:</b></span>
+      <span id="visit-count" style="font-weight:800;color:#0284c7">Cargando…</span>
+    </div>
+  </div>
 </main>
+
+<!-- Modal emergente para guía de instalación -->
+<div id="install-modal" class="modal-overlay">
+  <div class="modal-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <h3 style="margin:0;color:#0369a1;font-size:17px">📲 Instalar Ruta 19 en tu celular</h3>
+      <button id="close-modal" style="width:auto;padding:4px 10px;background:#f1f5f9;color:#475569;border-radius:8px">✕</button>
+    </div>
+    <p style="font-size:13px;color:#64748b;margin:0 0 14px">Ten a la mano los horarios del Circuito Tenex-Heredia directo desde tu pantalla de inicio como una aplicación:</p>
+    
+    <div id="modal-android" class="modal-step">
+      <span class="step-num">1</span>
+      <div><b>En Android / Chrome:</b> Presiona los tres puntos <b>⋮</b> arriba a la derecha y elige <b>"Instalar aplicación"</b> o <b>"Agregar a la pantalla principal"</b>.</div>
+    </div>
+    <div id="modal-ios" class="modal-step">
+      <span class="step-num">2</span>
+      <div><b>En iPhone / Safari:</b> Presiona el botón Compartir <b>⎋</b> (cuadrado con flecha hacia arriba) y selecciona <b>"Agregar al inicio"</b> ⊞.</div>
+    </div>
+    <div class="modal-step">
+      <span class="step-num">3</span>
+      <div><b>¡Listo!</b> Podrás abrir el checador sin necesidad de volver a buscar el enlace y funciona sin conexión a internet.</div>
+    </div>
+
+    <button id="modal-ok-btn" style="margin-top:16px;width:100%">Entendido</button>
+  </div>
+</div>
 
 <script>
 // Siluetas SVG oficiales
@@ -742,6 +835,101 @@ $("export").onclick = () => {
   link.click();
   URL.revokeObjectURL(u);
 };
+
+// Modal de instalación
+const modal = $("install-modal");
+const closeModal = () => { if (modal) modal.style.display = "none"; };
+const openModal = () => { if (modal) modal.style.display = "flex"; };
+
+if ($("close-modal")) $("close-modal").onclick = closeModal;
+if ($("modal-ok-btn")) $("modal-ok-btn").onclick = closeModal;
+if (modal) {
+  modal.onclick = e => { if (e.target === modal) closeModal(); };
+}
+
+// Botón de instalación PWA
+let deferredPrompt = null;
+const installBtn = $("btn-install");
+
+// Captura evento nativo en Android/Chrome/Edge
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault();
+  deferredPrompt = e;
+});
+
+if (installBtn) {
+  installBtn.addEventListener("click", async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const choice = await deferredPrompt.userChoice;
+      if (choice && choice.outcome === "accepted") {
+        installBtn.style.display = "none";
+      }
+      deferredPrompt = null;
+    } else {
+      // Abre guía interactiva con instrucciones precisas
+      openModal();
+    }
+  });
+}
+
+window.addEventListener("appinstalled", () => {
+  if (installBtn) installBtn.style.display = "none";
+  closeModal();
+  deferredPrompt = null;
+});
+
+// Si la app ya está instalada / abierta como PWA, ocultamos el botón
+const isInStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone;
+if (isInStandalone && installBtn) {
+  installBtn.style.display = "none";
+}
+
+// Contador de visitas (Usuarios que visitan la app)
+(async function initVisitCounter() {
+  const el = $("visit-count");
+  if (!el) return;
+  
+  // Guardamos visitas locales
+  let localVisits = parseInt(localStorage.getItem("local_visit_count") || "0", 10) + 1;
+  localStorage.setItem("local_visit_count", String(localVisits));
+
+  // Servicios de conteo en la nube con respaldo
+  let hitDone = false;
+
+  // 1. Intentar CounterAPI v1
+  try {
+    const res = await fetch("https://api.counterapi.dev/v1/circuito-tenex-ruta19-app/usuarios/up");
+    if (res.ok) {
+      const data = await res.json();
+      if (data && typeof data.count !== "undefined") {
+        el.textContent = `${Number(data.count).toLocaleString("es-MX")} visitas`;
+        hitDone = true;
+        return;
+      }
+    }
+  } catch (e) {}
+
+  // 2. Intentar servicio alterno si el primero no responde
+  if (!hitDone) {
+    try {
+      const res2 = await fetch("https://api.countapi.xyz/hit/circuito-tenex-ruta19/visitas");
+      if (res2.ok) {
+        const data2 = await res2.json();
+        if (data2 && typeof data2.value !== "undefined") {
+          el.textContent = `${Number(data2.value).toLocaleString("es-MX")} visitas`;
+          hitDone = true;
+          return;
+        }
+      }
+    } catch (e) {}
+  }
+
+  // 3. Fallback en caso de estar offline o sin red
+  if (!hitDone) {
+    el.textContent = `${localVisits} (en este celular)`;
+  }
+})();
 
 // Inicialización de la vista
 renderStopsForCurrentDir();
